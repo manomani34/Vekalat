@@ -1,0 +1,334 @@
+﻿@using Vekalat.UI.ViewModels.BlogViewModels
+@using Vekalat.Application.Common.Helpers
+@model BlogViewModel
+@{
+    ViewData["Title"] = "digioneplus";
+}
+
+<style>
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .cta {
+        position: relative;
+        margin: auto;
+        padding: 19px 22px;
+        transition: all 0.2s ease;
+    }
+
+        .cta:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            border-radius: 28px;
+            background: #0a87bf;
+            width: 56px;
+            height: 56px;
+            transition: all 0.3s ease;
+        }
+
+        .cta span {
+            position: relative;
+            font-size: 16px;
+            line-height: 18px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            vertical-align: middle;
+            color: #fff;
+        }
+
+        .cta svg {
+            position: relative;
+            top: 0;
+            margin-left: 10px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: #111;
+            stroke-width: 2;
+            transform: translateX(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .cta:hover:before {
+            width: 100%;
+            background: #0a87bf;
+        }
+
+        .cta:hover svg {
+            transform: translateX(0);
+        }
+
+        .cta:active {
+            transform: scale(0.96);
+        }
+
+    #background {
+        overflow: hidden;
+        opacity: 0.4;
+        color: #f3fbbb;
+        font-size: 100px;
+        position: absolute;
+        z-index: 0
+    }
+
+    .title-s {
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+        position: relative;
+        color: #ccc;
+    }
+
+    .title-e {
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+        position: relative;
+        color: #ccc;
+    }
+
+    .title-s:before {
+        content: "STUDIOS";
+        position: absolute;
+        color: #0a87bf;
+        top: 0;
+        left: 0;
+        width: 0%;
+        overflow: hidden;
+        transition: all 0.5s;
+    }
+
+    .title-e:before {
+        content: "EQUIPMENT";
+        position: absolute;
+        color: #0a87bf;
+        top: 0;
+        left: 0;
+        width: 0%;
+        overflow: hidden;
+        transition: all 0.5s;
+    }
+
+    .title-s:hover:before {
+        width: 100%;
+    }
+
+    .title-e:hover:before {
+        width: 100%;
+    }
+
+    .zoom:hover {
+        transform: scale(1.09); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        transition: all 0.3s;
+    }
+</style>
+<!-- Page Content-->
+<!-- Page Content-->
+<!-- Hero-->
+<section class="fw-section padding-top-10x padding-bottom-10x b-24">
+    <div class="row mx-0">
+        <!-- Category-->
+        <div class="category-card col-md-6 col-sm-12 fw-section padding-top-7x padding-bottom-7x">
+            <span class="overlay"></span>
+            <div class="d-flex justify-content-center">
+                <div class="px-3 text-center">
+                    <h2 style="font-size:60px;" class="display-4 text-white text">
+                        <span class="">
+                            <b class="title-e">EQUIPMENT</b>
+                        </span>
+                    </h2>
+                    @*<h5 class="text-white text-normal mb-3  text-shadow">Starting from $56.00</h5>*@
+                    <div class="view-button">
+                        @*<a class="btn btn-primary" href="@Url.Action("Index", "Equipment")">View Equipment</a>*@
+                        <a href="@Url.Action("Index", "Equipment")" class="cta">
+                            <span>View Equipment</span>
+                            <svg width="13px" height="10px" viewBox="0 0 13 10">
+                                <path d="M1,5 L11,5"></path>
+                                <polyline points="8 1 12 5 8 9"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category-->
+        <div class="category-card col-md-6 col-sm-12 fw-section padding-top-7x padding-bottom-7x">
+            <span class="overlay"></span>
+            <div class="d-flex justify-content-center">
+                <div class="px-3 text-center">
+                    <h2 style="font-size:60px;" class="display-4 text-white text-shadow">
+                        <b class="title-s">STUDIOS</b>
+                    </h2>
+                    @*<h5 class="text-white text-normal mb-3  text-shadow">Starting from $27.00</h5>*@
+                    <div class="view-button">
+                        <a href="@Url.Action("Index", "Studio")" class="cta">
+                            <span>View Studios</span>
+                            <svg width="13px" height="10px" viewBox="0 0 13 10">
+                                <path d="M1,5 L11,5"></path>
+                                <polyline points="8 1 12 5 8 9"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Category-->
+<div class="container-fluid px-0">
+</div>
+<!-- Video Carousel-->
+@(await Component.InvokeAsync("Slide"))
+<!-- Products Grid-->
+<section class="fw-section mt-4"
+         style="background-image: linear-gradient(to right, #aec12a, #dbe68f);">
+    <section class="container mt-5 fw-section mt-4 text-center">
+        <br />
+        <h3 class="text-center" style="margin-top:20px">
+            Our Work Process
+        </h3>
+        <small class="text-center">
+            FOLLOW THIS 3 STEPS, IF YOU NEED HELP CONTACT WITH US
+        </small>
+        <!--  <p class="h5 text-center text-muted">Awesome featured templates</p> -->
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 shadow-none"
+                     style="position:relative;background-color:transparent;text-align:left">
+                    <div id="background">
+                        01
+                    </div>
+                    <img class="card-img-top" src="images/jelly-pro-3.jpg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3 text-dark" style="z-index:2;position:relative">
+                            <span>
+                                CHOISE
+                            </span>
+                        </h4>
+                        <p style="z-index:2;position:relative;" class="card-text">
+                            at the End You Can Book the Services on a
+                            Date You Want and You Good to Go
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 shadow-none"
+                     style="position:relative;background-color:transparent;text-align:left">
+                    <div id="background">
+                        02
+                    </div>
+                    <img class="card-img-top" src="images/jelly-pro-2.jpeg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3 text-dark">
+                            <span>
+                                CHECK
+                            </span>
+                        </h4>
+                        <p style="z-index:2;position:relative;" class="card-text">
+                            then Check With Our Team if that Kind of
+                            Servies is Avaliable on the Date You Want to Book
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 shadow-none"
+                     style="position:relative;background-color:transparent;text-align:left">
+                    <div id="background">
+                        03
+                    </div>
+                    <img class="card-img-top" src="images/jelly-pro-1.jpeg" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3 text-dark">
+                            <span>
+                                BOOK
+                            </span>
+                        </h4>
+                        <p style="z-index:2;position:relative;" class="card-text">
+                            First Explore Our Website and Choise
+                            What Kind of Our Servieses Fits You
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<!-- Studios-->
+@(await Component.InvokeAsync("Studios"))
+@*<section class="fw-section mt-2 pt-5"
+    style="background-image:url('img/banners/blurred-background.jpg');background-size:cover;background-position-y:bottom">
+    <div class="row">
+    <div class="col-md-3 col-sm-6 text-center mb-30">
+    <img class="d-block w-90 img-thumbnail rounded-circle mx-auto mb-3 zoom" style="background-color:transparent"
+    src="img/services/01.png" alt="VIDEOGRAPHY">
+    <h6>VIDEOGRAPHY</h6>
+    <p class="text-light margin-bottom-none">Description for VIDEOGRAPHY</p>
+    </div>
+    <div class="col-md-3 col-sm-6 text-center mb-30">
+    <img class="d-block w-90 img-thumbnail rounded-circle mx-auto mb-3 zoom" style="background-color:transparent"
+    src="img/services/02.png" alt="WEB DESIGN">
+    <h6>WEB DESIGN</h6>
+    <p class="text-light margin-bottom-none">Description for WEB DESIGN</p>
+    </div>
+    <div class="col-md-3 col-sm-6 text-center mb-30">
+    <img class="d-block w-90 img-thumbnail rounded-circle mx-auto mb-3 zoom" style="background-color:transparent"
+    src="img/services/03.png" alt="PHOTOGRAPHY">
+    <h6>PHOTOGRAPHY</h6>
+    <p class="text-light margin-bottom-none">Description for PHOTOGRAPHY</p>
+    </div>
+    <div class="col-md-3 col-sm-6 text-center mb-30">
+    <img class="d-block w-90 img-thumbnail rounded-circle mx-auto mb-3 zoom" style="background-color:transparent"
+    src="img/services/04.png" alt="MARKETING">
+    <h6>MARKETING</h6>
+    <p class="text-light margin-bottom-none">Description for MARKETING</p>
+    </div>
+    </div>
+    </section>
+*@
+
+@(await Component.InvokeAsync("Brand"))
+
+<section class="section latest-news-area blog-area blog-grid blog-3-col ptb-30 padding-top-3x padding-bottom-3x">
+    <div class="container">
+        <h3 class="text-center mb-30 pb-2">Latest Blogs</h3>
+        <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;loop&quot;: false, &quot;autoHeight&quot;: true, &quot;margin&quot;: 30, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;630&quot;:{&quot;items&quot;:2},&quot;991&quot;:{&quot;items&quot;:3},&quot;1200&quot;:{&quot;items&quot;:3}} }">
+            @if (Model.PagingHandler.Items.Any())
+            {
+                @foreach (var item in Model.PagingHandler.Items)
+                {
+                    <div class="widget widget-featured-posts">
+                        <div class="entry">
+                            <div class="entry-thumb" style="max-width:40px">
+                                <a href="#">
+                                    <img class="rounded" src="images/blog-images/@item.Imagename" alt="Post">
+                                </a>
+                            </div>
+                            <div class="entry-content">
+                                <h4 class="entry-title">
+                                    <a href="#">@item.Title</a>
+                                </h4><span class="entry-meta">                                
+                                @String.Format("{0:dd MMM yyyy}", item.CreationTime)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+
+
+    </div>
+</section>
+
+

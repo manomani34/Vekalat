@@ -1,0 +1,112 @@
+﻿@using static Vekalat.Application.Features.TeamFeature;
+@model TeamForViewDto
+@{
+    ViewData["Title"] = "Team";
+    Layout = "_LayoutAccount";
+}
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>Team Member</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>
+                    <a href="@Url.Action("Team", "Team")">Team</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>Team Member</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
+        <!-- Content-->
+        <div class="col-xl-12 col-lg-12 order-lg-2">
+            <!-- Post-->
+            <div class="single-post-meta">
+                @*<div class="column">
+                    <div class="meta-link"><span>by</span>@Model.Member.LastName</div>
+                    <div class="meta-link"><span>in</span><a href="#">@Model.News_Subject.Title</a></div>
+                    </div>
+                    <div class="column">
+                    <div class="meta-link"><a href="#"><i class="icon-clock"></i>@Model.LDate</a></div>
+                    <div class="meta-link">
+                    <a class="scroll-to" href="#comments">
+                    <i class="icon-heart"></i>@Model.LikeCount
+                    </a>
+                    </div>
+                    </div>*@
+            </div>
+            <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: true, &quot;dots&quot;: true, &quot;loop&quot;: true }">
+                <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-2" src="~/Images/Team-images/@Model.Imagename" alt="Team">
+            </div>
+            <h2 class="padding-top-2x text-center">@Model.SurName</h2>
+            <p class="text-muted text-center">@Model.Job</p>
+            <p>@Html.Raw(Model.Description)</p>
+
+            <div class="single-post-footer">
+                @*<div class="column"><a class="sp-tag" href="#">#design,</a><a class="sp-tag" href="#">&nbsp;#fashion,</a><a class="sp-tag" href="#">&nbsp;#travelling</a></div>*@
+                <div class="column">
+                    <div class="entry-share">
+                        <span class="text-muted">Share post:</span>
+                        <div class="share-links">
+                            <a class="social-button shape-circle sb-facebook" href="#" data-toggle="tooltip" data-placement="top" title="whatsapp">
+                                <i class="socicon-whatsapp"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-youtube" href="#" data-toggle="tooltip" data-placement="top" title="youtube">
+                                <i class="socicon-youtube"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-instagram" href="#" data-toggle="tooltip" data-placement="top" title="Instagram">
+                                <i class="socicon-instagram"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-google-plus" href="#" data-toggle="tooltip" data-placement="top" title="pinterest">
+                                <i class="socicon-pinterest"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: true, &quot;dots&quot;: true, &quot;loop&quot;: true }">
+                @foreach (var item in Model.Galleries)
+                {
+                    <figure>
+                        @*<img width="100%" style="max-height:250px;"
+                            src="~/Images/TeamGallery-images/@item.Imagename" alt="Image">*@
+                        <div id="c-img" style="background-image:url('/Images/TeamGallery-images/@item.Imagename') "></div>
+                        @*<figcaption class="text-white">Image Caption</figcaption>*@
+                    </figure>
+                }
+            </div>
+
+                <div class="container mt-5">                    
+                    <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: false, &quot;loop&quot;: true, &quot;autoplay&quot;: true, &quot;autoplayTimeout&quot;: 4000, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:2}, &quot;470&quot;:{&quot;items&quot;:3},&quot;630&quot;:{&quot;items&quot;:4},&quot;991&quot;:{&quot;items&quot;:5},&quot;1200&quot;:{&quot;items&quot;:6}} }">
+
+                            @foreach (var item in Model.Logos)
+                            {
+                                <img class="d-block w-110 opacity-75 m-auto" 
+                             src="~/Images/TeamLogo-images/@item.Imagename" >
+                            }
+                        
+                    </div>
+                </div>
+
+            <!-- Post Navigation-->
+            <div class="entry-navigation mt-5">
+                <div class="column text-left"><a class="btn btn-outline-secondary btn-sm" href="#"><i class="icon-arrow-left"></i>&nbsp;Prev</a></div>
+                <div class="column"><a class="btn btn-outline-secondary view-all" href="@Url.Action("Team", "Team")" data-toggle="tooltip" data-placement="top" title="All Team"><i class="icon-menu"></i></a></div>
+                <div class="column text-right"><a class="btn btn-outline-secondary btn-sm" href="#">Next&nbsp;<i class="icon-arrow-right"></i></a></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

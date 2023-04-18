@@ -1,0 +1,64 @@
+﻿@using static Vekalat.Application.Features.CategoryFeature
+@model CreateOrEditCategoryDto
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="form">
+            <input type="hidden" asp-for="ParentId" />
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group ">
+                <label class="text-right ">Title</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Save" class="btn btn-warning submitBtn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+    $("#form").on('submit', function (e) {
+        debugger;
+        e.preventDefault();
+        //if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+        debugger;
+        $.ajax({
+            method: 'PUT',
+            url: '@Url.Action("Edit")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                var result = response;
+
+                if (result.status === 422) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.warning(result.message);
+                    return;
+                }
+                if (result.status === 200) {
+                    toastr.success('Your Data Is Added', 'Success');
+                    location.reload();
+                } else {
+                    toastr.error(result.message, 'خطا');
+                }
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function () {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'خطا');
+            }
+        });
+    });
+</script>

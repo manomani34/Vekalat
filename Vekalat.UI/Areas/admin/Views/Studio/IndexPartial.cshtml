@@ -1,0 +1,173 @@
+﻿@using Vekalat.UI.Areas.admin.ViewModels.StudioViewModels
+@model StudioViewModel
+@{
+    ViewData["Title"] = "Studio";
+}
+
+<div id="studioList">
+    <div class="card mb-4">
+        <div class="row">
+            <div class="col-5"><h5 class="card-header">Search @ViewData["Title"]</h5></div>
+            <div class="col-2"></div>
+        </div>
+
+
+        <form method="get" id="studioSubForm">
+            <div class="card-body">
+                <div class="row gx-3 gy-2 align-items-center">
+                    <input type="hidden" asp-for="Filter.PageId" name="PageId" id="StudioPageId" value="1" />
+                    <input type="hidden" asp-for="Filter.Take" name="Take" />
+                    <div class="col-md-4">
+                        <label class="form-label" for="basic-icon-default-fullname">Studio Title</label>
+                        <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-fullname2" class="input-group-text">
+                                <i class="bx bx-search"></i>
+                            </span>
+                            <input type="text" asp-for="Filter.SearchFilter" name="SearchFilter"
+                                   class="form-control"
+                                   id="basic-icon-default-fullname"
+                                   placeholder="search title"
+                                   aria-label="John Doe"
+                                   aria-describedby="basic-icon-default-fullname2" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="showToastPlacement">&nbsp;</label>
+                        <button type="submit" id="showToastPlacement" class="btn btn-primary d-block">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card">
+        <div class="table-responsive text-nowrap " style="min-height: 30vh">
+            <table class="table">
+                <thead>
+                    <tr>
+                        @*                    <th>Image</th>*@
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>IsVisible</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @if (Model.PagingHandler.Items.Any())
+                    {
+                        @foreach (var item in Model.PagingHandler.Items)
+                        {
+                            <tr id="table_@item.Id">
+
+                                <td>
+                                    @item.Id
+                                </td>
+                                <td>
+                                    @item.Title
+                                </td>
+                                <td>
+                                    <input type="checkbox" disabled checked="@item.IsActive" />
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" href="javascript:void(0)" onclick="selectStudio(@item.Id,'@item.Title')"> select</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <p class="text-danger">No Record Found!</p>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card my-4 p-2">
+        <div class="d-flex">
+            @if (Model.PagingHandler.PageCount > 1)
+            {
+                <nav class="custom-pagination" aria-label="Page navigation example">
+                    <ol class="pagination" reversed="reversed">
+
+                        <li class="page-item @(Model.PagingHandler.ActivePage <= 1 ? "disabled" : "") ">
+                            <a onclick="ArrowPage(-1)" class="page-link" href="javascript:void(0)" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        </li>
+                        @for (int counter = Model.PagingHandler.StartPage; counter <= Model.PagingHandler.EndPage; counter++)
+                        {
+                            <li class="page-item @(Model.PagingHandler.ActivePage == counter ? "active" : "")"><a onclick="SetPage(@counter)" class="page-link" href="javascript:void(0)">@counter</a></li>
+                        }
+
+                        <li class="page-item @(Model.PagingHandler.EndPage <= Model.PagingHandler.ActivePage ? "disabled" : "")">
+                            <a onclick="ArrowPage(1)" class="page-link" href="javascript:void(0)" aria-label="Next">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        </li>
+
+                    </ol>
+                </nav>
+            }
+            <div class="col-md-2 col-12 mx-3">
+                <Select onchange="changeTake(this)" asp-for="Filter.Take" class="form-control">
+                    <option value=10>10</option>
+                    <option value=30>30</option>
+                    <option value=50>50</option>
+                    <option value=80>80</option>
+                    <option value=100>100</option>
+                </Select>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function changeTake(e) {
+        $("#StudioPageId").val(1);
+        $("#Filter_Take").val($(e).val());
+        $("#studioSubForm").submit();
+    }
+    function ArrowPage(pageId) {
+        var currentPage = @Model.PagingHandler.ActivePage;
+        currentPage += pageId;
+        SetPage(currentPage);
+    }
+    function SetPage(id) {
+        debugger;
+
+        $("#StudioPageId").val(id);
+        $("#studioSubForm").submit();
+    }
+
+    $("#studioSubForm").on('submit', function (e) {
+        debugger;
+        e.preventDefault();
+        Loader.open();
+        var formData = new FormData(document.getElementById("studioSubForm"));
+        let tes = Object.fromEntries(formData);
+        $.ajax({
+            method: 'POST',
+            url: '@Url.Action("IndexPartial")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $("#studioList").html(response);
+            },
+            error: function (response) {
+                var result = $.parseJSON(response);
+                toastr.error(result.message, 'خطا');
+            },
+            complete: function (data) {
+                Loader.close();
+            }
+        });
+    });
+
+</script>

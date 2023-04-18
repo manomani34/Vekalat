@@ -1,0 +1,185 @@
+﻿@using Vekalat.UI.Areas.admin.ViewModels.EquipmentReservationViewModels;
+@model EquipmentReservationViewModel
+
+<div class="card my-4 p-2">
+    <div class="row">
+        <div class="col-5"><h5 class="card-header">Search @ViewData["Title"]</h5></div>
+        <div class="col-2"></div>
+        @* <div class="col-5 text-end">
+        <a class="btn btn-info mx-4 mt-4" asp-action="Create">Add Reservation</a>
+        </div>*@
+    </div>
+
+
+    <form method="get" asp-action="IndexPartial" id="subForm">
+        <div class="card-body">
+            <div class="row gx-3 gy-2 align-items-center">
+                <input type="hidden" name="PageId" id="pageId" value="1" />
+                <input type="hidden" asp-for="Filter.Take" name="Take" />
+                <div class="col-md-4">
+                    <label class="form-label" for="basic-icon-default-fullname">Reservation Title</label>
+                    <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text">
+                            <i class="bx bx-search"></i>
+                        </span>
+                        <input type="text" asp-for="Filter.SearchFilter" name="SearchFilter"
+                               class="form-control"
+                               id="basic-icon-default-fullname" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="showToastPlacement">&nbsp;</label>
+                    <button type="submit" id="showToastPlacement" class="btn btn-primary d-block">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card my-4 p-2">
+    <div class="table-responsive text-nowrap " style="min-height: 30vh">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Equipment</th>
+                    <th>user</th>
+                    <th>Reservation Date</th>
+                    <th>Return Date</th>
+                    <th>Date</th>
+                    @*<th>Actions</th>*@
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @if (Model.PagingHandler.Items.Any())
+                {
+                    @foreach (var item in Model.PagingHandler.Items)
+                    {
+                        <tr id="table_@item.Id">
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Title
+                            </td>
+                            <td>
+                                @item.Equipment
+                            </td>
+                            <td>
+                                @item.User
+                            </td>
+                            <td>
+                                @item.ReservedDate
+                            </td>
+                            <td>
+                                @item.ReturnDate
+                            </td>
+                            <td>
+                                @item.CreationTime
+                            </td>
+                            @*<td>
+                    <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id" target="_blank"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                    <a class="dropdown-item" href="#" onclick="Delete(@item.Id)"><i class="bx bx-trash me-1"></i> Delete</a>
+                    </div>
+                    </div>
+                    </td>*@
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            <p class="text-danger">No Record Found!</p>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card my-4 p-2">
+    <div class="d-flex">
+        @if (Model.PagingHandler.PageCount > 1)
+        {
+            <nav class="custom-pagination" aria-label="Page navigation example">
+                <ol class="pagination" reversed="reversed">
+
+                    <li class="page-item @(Model.PagingHandler.ActivePage <= 1 ? "disabled" : "") ">
+                        <a onclick="ArrowPage(-1)" class="page-link" href="javascript:void(0)" aria-label="Previous">
+                            <span aria-hidden="true">«</span>
+                        </a>
+                    </li>
+                    @for (int counter = Model.PagingHandler.StartPage; counter <= Model.PagingHandler.EndPage; counter++)
+                    {
+                        <li class="page-item @(Model.PagingHandler.ActivePage == counter ? "active" : "")"><a onclick="SetPage(@counter)" class="page-link" href="javascript:void(0)">@counter</a></li>
+                    }
+
+                    <li class="page-item @(Model.PagingHandler.EndPage <= Model.PagingHandler.ActivePage ? "disabled" : "")">
+                        <a onclick="ArrowPage(1)" class="page-link" href="javascript:void(0)" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                        </a>
+                    </li>
+
+                </ol>
+            </nav>
+        }
+        <div class="col-md-2 col-12 mx-3">
+            <Select onchange="changeTake(this)" asp-for="Filter.Take" class="form-control">
+                <option value=10>10</option>
+                <option value=30>30</option>
+                <option value=50>50</option>
+                <option value=80>80</option>
+                <option value=100>100</option>
+            </Select>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeTake(e) {
+        $("#pageId").val(1);
+        $("#Filter_Take").val($(e).val());
+        $("#subForm").submit();
+    }
+    function ArrowPage(pageId) {
+        var currentPage = @Model.PagingHandler.ActivePage;
+        currentPage += pageId;
+        SetPage(currentPage);
+    }
+    function SetPage(id) {
+        $("#pageId").val(id);
+        $("#subForm").submit();
+    }
+    $("#subForm").on('submit', function (e) {
+        e.preventDefault();
+        Loader.open();
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            method: 'POST',
+            url: '@Url.Action("IndexPartial")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $("#equipmentReservation").html(response);
+            },
+            error: function (response) {
+                var result = $.parseJSON(response);
+                toastr.error(result.message, 'خطا');
+                $(".submit").prop('disabled', true);
+            },
+            complete: function (data) {
+                Loader.close();
+            }
+        });
+    });
+
+</script>

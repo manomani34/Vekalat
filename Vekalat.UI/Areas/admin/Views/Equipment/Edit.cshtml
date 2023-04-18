@@ -1,0 +1,407 @@
+﻿@using Vekalat.Application.Enums
+@using static Vekalat.Application.Features.EquipmentFeature
+@model CreateOrEditEquipmentDto
+@{
+    ViewData["Title"] = "Add New Equipment";
+    List<SelectListItem> categories = ViewData["Categories"] as List<SelectListItem>;
+    List<SelectListItem> brands = ViewData["Brands"] as List<SelectListItem>;
+}
+
+
+@section Plugins
+    {
+    <script src="/admin/Plugins/ckeditor/ckeditor.js"></script>
+    <link href="/admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+}
+
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <h5 class="card-header">@ViewData["Title"]</h5>
+            <div class="card-body">
+                <form id="form" method="post">
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="form-group col-md-3 col-12 ">
+                                <label asp-for="Title" class="form-label"> </label>
+                                <input class="form-control" asp-for="Title" type="text">
+                                <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                            </div>
+
+
+                            @*  <div class="form-group col-md-4 col-12 ">
+                            <label asp-for="SerialNumber" class="form-label"> </label>
+                            <input asp-for="SerialNumber" type="text" class="form-control ">
+                            <span asp-validation-for="SerialNumber" class="text text-danger mb-2"></span>
+                            </div>*@
+
+                          @*  <div class="form-group col-md-4 col-12 ">
+                                <label asp-for="Quantity" class="form-label"> </label>
+                                <input asp-for="Quantity" class="form-control ">
+                                <span asp-validation-for="Quantity" class="text text-danger mb-2"></span>
+                            </div>*@
+
+                            <div class="form-group col-md-3 col-12 mb-3">
+                                <label asp-for="Price" class="form-label"> </label>
+                                <input asp-for="Price" class="form-control ">
+                                <span asp-validation-for="Price" class="text text-danger mb-2"></span>
+                            </div>
+
+
+                            <div class="form-group col-md-3 col-12">
+                                <label asp-for="EquipmentStatus" class="form-label"> </label>
+                                <select asp-for="EquipmentStatus" asp-items="@Html.GetEnumSelectList<EquipmentStatus>()" class="form-select">
+                                </select>
+                            </div>
+
+                                 <div class="form-group col-md-3 col-12 mt-3">
+                                <div class="form-check mt-3">
+                                    <input type="checkbox" asp-for="IsActive" class="form-check-input shadow ">
+
+                                    <label class="form-check-label" asp-for="IsActive"> </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4 col-12">
+                                <label asp-for="EquipmentPhysicalStatus" class="form-label"> </label>
+                                <select asp-for="EquipmentPhysicalStatus" asp-items="@Html.GetEnumSelectList<EquipmentPhysicalStatus>()" class="form-select">
+                                </select>
+                                <span asp-validation-for="EquipmentPhysicalStatus" class="text text-danger mb-2"></span>
+                            </div>
+
+
+                            <div class="form-group col-md-4 col-12">
+                                <label class="form-label">category </label>
+
+                                <select asp-for="CategoryId" class="form-select">
+                                    @foreach (var category in categories)
+                                    {
+                                        <option value="@category.Value">@category.Text</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text text-danger mb-2"></span>
+
+                            </div>
+
+
+
+                            <div class="form-group col-md-4 col-12">
+                                <label class="col-12">Brand </label>
+
+                                <select asp-for="BrandId" class="form-select">
+                                    @foreach (var brand in brands)
+                                    {
+                                        <option value="@brand.Value">@brand.Text</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text text-danger mb-2"></span>
+
+                            </div>
+
+                        </div>
+
+@*                        <div class="col-md-12 my-3">
+                            <div class="card  text-white mb-3">
+                                <div class="card-header bg-secondary">Serial Numbers</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-4 col-12 ">
+                                            <label class="form-label"> Serial Number </label>
+                                            <input class="form-control" id="Serial" type="text">
+                                        </div>
+                                        <div class="form-group col-md-4 col-12 ">
+                                            <label class="control-label col-12 ">
+                                                &nbsp;
+                                            </label>
+                                            <button type="button" onclick="addSerial()" class="btn btn-success">Add</button>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Title</th>
+                                                        <th>#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableSerialBody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+*@
+
+                        <div class=" form-group col-md-12 col-12 mb-3">
+                            <label class="form-label" asp-for="Description"> </label>
+                            <textarea class="form-control" asp-for="Description" type="text"></textarea>
+                            <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                        </div>
+
+
+                        <div class="col-md-12 my-3">
+                            <div class="card  text-white mb-3">
+                                <div class="card-header bg-secondary">Features</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-4 col-12 ">
+                                            <label class="form-label"> Title </label>
+                                            <input class="form-control" id="Feature_Title" type="text">
+                                        </div>
+                                        <div class="form-group col-md-4 col-12 ">
+                                            <label class="form-label"> Value </label>
+                                            <input class="form-control" id="Feature_Value" type="text">
+                                        </div>
+                                        <div class="form-group col-md-4 col-12 ">
+                                            <label class="control-label col-12 ">
+                                                &nbsp;
+                                            </label>
+                                            <button type="button" onclick="addFeature()" class="btn btn-success">Add</button>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Title</th>
+                                                        <th>Value</th>
+                                                        <th>#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableBody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="panel panel-custom panel-border">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title">Select Image</h5>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                    </div>
+                                    <div class="dropify-loader">
+                                    </div>
+                                    <div class="dropify-errors-container">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                    <input asp-for="Image" type="file" class="dropify" data-default-file="/images/equipment-images/@Model.Imagename">
+
+                                    <div class="dropify-preview">
+                                        <span class="dropify-render"></span>
+                                        <div class="dropify-infos">
+                                            <div class="dropify-infos-inner">
+                                                <p class="dropify-filename">
+                                                    <span class="file-icon"></span>
+                                                    <span class="dropify-filename-inner"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning submitBtn">Edit</button>
+                    <a href="@Url.Action("Index")" class="btn btn-danger">Cancle</a>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="/admin/plugins/fileuploads/js/dropify.min.js"></script>
+    <script>
+
+        var featureValue = document.getElementById("Feature_Value");
+        var featureTitle = document.getElementById("Feature_Title");
+        var serialTitle = document.getElementById("Serial");
+
+
+        class createOrEditFeatureDto {
+            constructor(title, value) {
+                this.title = title;
+                this.value = value;
+            }
+        }
+        class createOrEditEquipmentItemDto {
+            constructor(id, serialNumber) {
+                this.id = id;
+                this.serialNumber = serialNumber;
+            }
+
+        }
+
+        let features = [];
+        let serialNumbers = [];
+
+        CKEDITOR.replace('Description', {
+            customConfig: '/adminAssets/Plugins/configs/Config.js'
+        });
+
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Drag or click the file here',
+                'replace': 'Drag or click here to replace the file',
+                'remove': 'Remove',
+                'error': 'An error occurred'
+            },
+            error: {
+                'fileSize': 'The file size exceeds the limit! (1M).'
+            }
+        });
+
+
+
+        $("#form").on('submit', function (e) {
+            debugger;
+            e.preventDefault();
+            //if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            formData.set('Description', CKEDITOR.instances['Description'].getData());
+            formData.set('Features', JSON.stringify(features));
+            //formData.set('SerialNumbers', JSON.stringify(serialNumbers));
+
+            $.ajax({
+                method: 'PUT',
+                url: '@Url.Action("Edit")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        location.href = '@Url.Action("Index")'
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    var result = $.parseJSON(e);
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        });
+
+        function initFeatures() {
+            let json = @Html.Raw(Model.Features);
+            if (json === null) { return };
+
+            var keys = Object.keys(json);
+            keys.forEach(function (key) {
+                features.push(new createOrEditFeatureDto(json[key].title, json[key].value));
+            });
+            renderTable();
+        }
+        //function initSerials() {
+        //    let json = @Html.Raw(Model.SerialNumbers);
+        //    if(json === null ){ return};
+        //    var keys = Object.keys(json);
+        //    keys.forEach(function (key) {
+        //        serialNumbers.push(new createOrEditEquipmentItemDto(json[key].Id, json[key].SerialNumber));
+        //    });
+        //    renderSerialTable();
+        //}
+
+        (function () {
+            initFeatures();
+            //initSerials();
+        })();
+
+        function addSerial() {
+            const newitem = new createOrEditEquipmentItemDto(0, serialTitle.value);
+            serialNumbers.push(newitem);
+            this.renderSerialTable();
+            this.clearInputs();
+        }
+
+        function addFeature() {
+            const newFeature = new createOrEditFeatureDto(featureTitle.value, featureValue.value);
+            features.push(newFeature);
+            this.renderTable();
+            this.clearInputs();
+        }
+
+        function clearInputs() {
+            featureTitle.value = "";
+            featureValue.value = "";
+            serialTitle.value = "";
+
+        }
+
+        function renderTable() {
+            var bodyInnerHtml = '';
+            var counter = 0;
+            for (const element of features) {
+                var tableRow = `<tr> \r\n`;
+                tableRow = tableRow + `<td>${element.title}</td> \r\n`;
+                tableRow = tableRow + `<td>${element.value}</td> \r\n`;
+                tableRow = tableRow + `<td><button id='delBtn-${counter}' class='btn btn-sm btn-danger' onclick='deleteItem(${counter})'><i class='bx bx-trash me-1'></i></button></td> \r\n`;
+                tableRow = tableRow + `</tr>`;
+                bodyInnerHtml = bodyInnerHtml + tableRow;
+                counter++;
+            }
+
+            document.getElementById('tableBody').innerHTML = bodyInnerHtml;
+        }
+
+        function renderSerialTable() {
+            let bodyInnerHtml = '';
+            let counter = 0;
+            for (const element of serialNumbers) {
+                let tableRow = `<tr> \r\n`;
+                tableRow = tableRow + `<td>${element.serialNumber}</td> \r\n`;
+                tableRow = tableRow + `<td><button id='delSerialBtn-${counter}' class='btn btn-sm btn-danger' onclick='deleteSerialItem(${counter})'><i class='bx bx-trash me-1'></i></button></td> \r\n`;
+                tableRow = tableRow + `</tr>`;
+                bodyInnerHtml = bodyInnerHtml + tableRow;
+                counter++;
+            }
+
+            document.getElementById('tableSerialBody').innerHTML = bodyInnerHtml;
+        }
+
+        function deleteItem(itemId) {
+            console.log('deleting Item ' + itemId);
+            features = features.filter((data, idx) => idx !== itemId);
+            console.log(features);
+            this.renderTable();
+        }
+
+        function deleteSerialItem(itemId) {
+            console.log('deleting Item ' + itemId);
+            serialNumbers = serialNumbers.filter((data, idx) => idx !== itemId);
+            console.log(serialNumbers);
+            this.renderSerialTable();
+        }
+
+    </script>
+}
+
+
+

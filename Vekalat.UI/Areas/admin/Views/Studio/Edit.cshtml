@@ -1,0 +1,286 @@
+﻿@using static Vekalat.Application.Features.StudioFeature
+@model CreateOrEditStudioDto
+@{
+    ViewData["Title"] = "Add New Studio";
+}
+
+
+@section Plugins
+    {
+    <script src="/admin/Plugins/ckeditor/ckeditor.js"></script>
+    <link href="/admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+}
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <h5 class="card-header">@ViewData["Title"]</h5>
+                <div class="card-body">
+                    <form id="form" method="post">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="form-group col-md-4 col-12 ">
+                                    <label asp-for="Title" class="form-label"> </label>
+                                    <input class="form-control" asp-for="Title" type="text">
+                                    <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                                </div>
+
+
+                                <div class="form-group col-md-4 col-12 mb-3">
+                                    <label asp-for="Price" class="form-label"> </label>
+                                    <input asp-for="Price" class="form-control ">
+                                    <span asp-validation-for="Price" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class="form-group col-md-4 col-12 mt-3">
+                                    <div class="form-check mt-3">
+                                        <input type="checkbox" asp-for="IsActive" class="form-check-input shadow ">
+
+                                        <label class="form-check-label" asp-for="IsActive"> </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6 col-12 ">
+                                    <label asp-for="Email" class="form-label"> </label>
+                                    <input class="form-control" asp-for="Email" type="text">
+                                    <span asp-validation-for="Email" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class="form-group col-md-6 col-12 ">
+                                    <label asp-for="Tell" class="form-label"> </label>
+                                    <input class="form-control" asp-for="Tell" type="text">
+                                    <span asp-validation-for="Tell" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class=" form-group col-md-12 col-12 mb-3">
+                                    <label class="form-label" asp-for="Address"> </label>
+                                    <textarea class="form-control" asp-for="Address" type="text"></textarea>
+                                    <span asp-validation-for="Address" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class=" form-group col-md-12 col-12 mb-3">
+                                    <label class="form-label" asp-for="Location"> </label>
+                                    <textarea class="form-control" asp-for="Location" type="text"></textarea>
+                                    <span asp-validation-for="Location" class="text text-danger mb-2"></span>
+                                </div>
+
+                            </div>
+
+                            <div class=" form-group col-md-12 col-12 mb-3">
+                                <label class="form-label" asp-for="Description"> </label>
+                                <textarea class="form-control" asp-for="Description" type="text"></textarea>
+                                <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-4 col-12 ">
+                                    <label class="form-label"> Title </label>
+                                    <input class="form-control" id="Feature_Title" type="text">
+                                </div>
+                                <div class="form-group col-md-4 col-12 ">
+                                    <label class="form-label"> Value </label>
+                                    <input class="form-control" id="Feature_Value" type="text">
+                                </div>
+                                <div class="form-group col-md-4 col-12 ">
+                                    <label class="control-label col-12 ">
+                                        &nbsp;
+                                    </label>
+                                    <button type="button" onclick="addFeature()" class="btn btn-success">Add</button>
+                                </div>
+
+                            </div>
+                            <div class="row my-3">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Value</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="panel panel-custom panel-border">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Select Image</h5>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div>
+                                        </div>
+                                        <div class="dropify-loader">
+                                        </div>
+                                        <div class="dropify-errors-container">
+                                            <ul>
+                                            </ul>
+                                        </div>
+                                        <input asp-for="Image" type="file" class="dropify" data-default-file="/images/studio-images/@Model.Imagename">
+
+                                        <div class="dropify-preview">
+                                            <span class="dropify-render"></span>
+                                            <div class="dropify-infos">
+                                                <div class="dropify-infos-inner">
+                                                    <p class="dropify-filename">
+                                                        <span class="file-icon"></span>
+                                                        <span class="dropify-filename-inner"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning submitBtn">Edit</button>
+                        <a href="@Url.Action("Index")" class="btn btn-danger">Cancle</a>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="/admin/plugins/fileuploads/js/dropify.min.js"></script>
+    <script>
+
+        var featureValue = document.getElementById("Feature_Value");
+        var featureTitle = document.getElementById("Feature_Title");
+
+
+        class createOrEditFeatureDto {
+            constructor(title, value) {
+                this.title = title;
+                this.value = value;
+            }
+
+        }
+
+        let features = [];
+
+        CKEDITOR.replace('Description', {
+            customConfig: '/adminAssets/Plugins/configs/Config.js'
+        });
+
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Drag or click the file here',
+                'replace': 'Drag or click here to replace the file',
+                'remove': 'Remove',
+                'error': 'An error occurred'
+            },
+            error: {
+                'fileSize': 'The file size exceeds the limit! (1M).'
+            }
+        });
+
+
+
+        $("#form").on('submit', function (e) {
+            Loader.open();
+            e.preventDefault();
+            //if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            formData.set('Description', CKEDITOR.instances['Description'].getData());
+            setFeatures(formData);
+
+            $.ajax({
+                method: 'PUT',
+                url: '@Url.Action("Edit")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('Changes successfully saved', 'موفقیت');
+                        location.href = '@Url.Action("Index")'
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    var result = $.parseJSON(e);
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                },
+                complete: function () {
+                    Loader.close();
+                }
+            });
+        });
+
+        (function () {
+            let json = @Html.Raw(Model.Features);
+            var keys = Object.keys(json);
+            keys.forEach(function (key) {
+                features.push(new createOrEditFeatureDto(json[key].Title, json[key].Value));
+            });
+            renderTable();
+            debugger;
+        })();
+
+
+        function setFeatures(formData) {
+            features.forEach((item, index) => {
+                formData.set(`FeatureList[${index}].Title`, item.title);
+                formData.set(`FeatureList[${index}].Value`, item.value);
+            })
+
+        }
+        function addFeature() {
+            const newFeature = new createOrEditFeatureDto(featureTitle.value, featureValue.value);
+            features.push(newFeature);
+            this.renderTable();
+            this.clearInputs();
+        }
+
+        function clearInputs() {
+            featureTitle.value = "";
+            featureValue.value = "";
+        }
+
+        function renderTable() {
+            var bodyInnerHtml = '';
+            var counter = 0;
+            for (const element of features) {
+                var tableRow = `<tr> \r\n`;
+                tableRow = tableRow + `<td>${element.title}</td> \r\n`;
+                tableRow = tableRow + `<td>${element.value}</td> \r\n`;
+                tableRow = tableRow + `<td><button id='delBtn-${counter}' class='btn btn-danger' onclick='deleteItem(${counter})'><i class='bx bx-trash me-1'></i></button></td> \r\n`;
+                tableRow = tableRow + `</tr>`;
+                bodyInnerHtml = bodyInnerHtml + tableRow;
+                counter++;
+            }
+
+            document.getElementById('tableBody').innerHTML = bodyInnerHtml;
+        }
+
+        function deleteItem(itemId) {
+            console.log('deleting Item ' + itemId);
+            features = features.filter((data, idx) => idx !== itemId);
+            console.log(features);
+            this.renderTable();
+        }
+
+    </script>
+}
+

@@ -1,0 +1,110 @@
+﻿@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Enums;
+@using static Vekalat.Application.Features.BasketFeature;
+@model Basket
+@{
+    int i = 0;
+}
+
+<div class="container">
+    @if (Model != null && Model.BasketItems.Any())
+    {
+        <div class="table-responsive shopping-cart">
+            <form id="basketform">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Subtotal</th>
+                            <th class="text-center">Discount</th>
+                            <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#" onclick="clearBasket()">Clear Cart</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.BasketItems)
+                        {
+                            @if (item.BasketItemType == BasketItemType.Equipment)
+                            {
+                                <tr>
+                                    <input type="hidden" asp-for="BasketItems[i].ItemId" value="@item.Equipment.Id">
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="/EquipmentDetails/@item.ItemId/@item.Equipment.Title.ToFixedPath()"><img src="/images/equipment-images/thumbnail/@item.Equipment.Imagename" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="/product/@item.Equipment.Id/@item.Equipment.Title.ToFixedPath()">@item.Equipment.Title</a></h4>
+                                                <p>@item.BasketItemType</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="count-input">
+                                            <select asp-for="BasketItems[i].Quantity" class="form-control">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">@(item.PriceWithDiscount * item.Quantity)</td>
+                                    <td class="text-center text-lg text-medium">-</td>
+                                    <td class="text-center"><a class="remove-from-cart" href="javascript:void(0)" onclick="removeBasket(@item.ItemId,@((int)BasketItemType.Equipment),2)" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
+                                </tr>
+                            }
+                            @if (item.BasketItemType == BasketItemType.Studio)
+                            {
+                                <tr>
+                                    <input type="hidden" asp-for="BasketItems[i].ItemId" value="@item.Studio.Id">
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="/StudioDetails/@item.ItemId/@item.Studio.Title.ToFixedPath()">
+                                                <img src="/images/studio-images/thumbnail/@item.Studio.Imagename" alt="Product">
+                                            </a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="/StudioDetails/@item.ItemId/@item.Studio.Title.ToFixedPath()">@item.Studio.Title</a></h4>
+                                                <p>@item.BasketItemType</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        -
+                                    </td>
+                                    <td class="text-center text-lg text-medium">@(item.PriceWithDiscount * item.Quantity)</td>
+                                    <td class="text-center text-lg text-medium">-</td>
+                                    <td class="text-center"><a class="remove-from-cart" href="javascript:void(0)" onclick="removeBasket(@item.ItemId,@((int)BasketItemType.Studio),2)" data-toggle="tooltip" title="Remove item"><i class="icon-cross"></i></a></td>
+                                </tr>
+                            }
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="shopping-cart-footer">
+            <div class="column">
+                <form class="coupon-form" method="post">
+                    <input class="form-control form-control-sm" asp-for="Voucher" type="text" placeholder="Coupon code" required>
+                    <button class="btn btn-outline-primary btn-sm" type="button" onclick="addVoucher()">Apply Coupon</button>
+                </form>
+            </div>
+            <div class="column text-lg">Subtotal: <span class="text-medium">@Model.TotalAmount</span></div>
+        </div>
+        <div class="shopping-cart-footer">
+            @*<div class="column"><a class="btn btn-outline-secondary" href="shop-grid-ls.html"><i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>*@
+            <div class="column">
+                <a class="btn btn-primary" href="javascript:void(0)" onclick="UpdateBasket()">Update Cart</a>
+                <a class="btn btn-success" href="/checkout">Checkout</a>
+            </div>
+        </div>
+    }
+    else
+    {
+
+        <div class="product">
+            <p>Basket is Empty!</p>
+        </div>
+    }
+</div>
+

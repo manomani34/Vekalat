@@ -1,0 +1,154 @@
+﻿@using Vekalat.Application.Enums
+@using static Vekalat.Application.Features.EquipmentReservationFeature;
+@model CreateOrEditEquipmentReservationDto
+
+
+<form id="form" method="post">
+    <input asp-for="ReservedDate" type="hidden">
+    <input asp-for="ReturnDate" type="hidden">
+
+    <div class="panel-body my-3">
+        <div class="row">
+
+            <div class="form-group col-md-12 col-12 mb-3">
+                <label asp-for="Title" class="form-label"> </label>
+                <input class="form-control" asp-for="Title" type="text">
+                <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+            </div>
+
+
+            <div class="form-group col-md-12 col-12 mb-3">
+                <label asp-for="UserId" class="form-label"> </label>
+                <div class="input-group">
+                    <input asp-for="UserId" type="hidden">
+                    <input type="text" id="UserTitle" class="form-control" disabled>
+                    <button class="btn btn-outline-primary" type="button" onclick="openUserModal()" id="button-addon2">search</button>
+                </div>
+                <span asp-validation-for="UserId" class="text text-danger mb-2"></span>
+            </div>
+
+            <div class="form-group col-md-12 col-12 mb-3">
+                <label asp-for="EquipmentId" class="form-label"> </label>
+                <div class="input-group">
+                    <input asp-for="EquipmentId" type="hidden">
+                    <input type="text" id="EquipmentTitle" class="form-control" disabled>
+                    <button class="btn btn-outline-primary" type="button" onclick="openEquipmentModal()" id="button-addon2">search</button>
+                </div>
+                <span asp-validation-for="EquipmentId" class="text text-danger mb-2"></span>
+            </div>
+
+
+
+            <div class="form-group col-md-12 col-12 ">
+                <label asp-for="Description" class="form-label"> </label>
+                <textarea asp-for="Description" class="form-control "></textarea>
+                <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+            </div>
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-success submitBtn">Save</button>
+    <div class="clearfix"></div>
+</form>
+
+
+<script>
+
+    $("#form").on('submit', function (e) {
+        Loader.open();
+
+        e.preventDefault();
+        //if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            method: 'POST',
+            url: '@Url.Action("Create")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                var result = response;
+                if (result.status === 422) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.warning(result.message);
+                    return;
+                }
+                if (result.status === 200) {
+                    toastr.success(result.message, 'موفقیت');
+                    $.CalendarApp.applayEvent(result.result);
+                } else {
+                    toastr.error(result.message, 'Error');
+                }
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function () {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'Error');
+            },
+            complete: function () {
+                Loader.close();
+                $("#myModal").modal('hide');
+            }
+        });
+    });
+
+    function selectEquipment(id, title) {
+        $("#EquipmentId").val(id);
+        $("#EquipmentTitle").val(title);
+        $("#myModalEquipment").modal('hide');
+    }
+    function selectUser(id, title) {
+        $("#UserId").val(id);
+        $("#UserTitle").val(title);
+        $("#myModalUser").modal('hide');
+
+    }
+    function openEquipmentModal() {
+        Loader.open();
+        $.ajax({
+            method: 'GET',
+            url: '@Url.Action("IndexPartial","Equipment")',
+            success: function (response) {
+                $("#myModalEquipment").modal('toggle');
+                $("#myModalEquipmentLabel").html("New Event");
+                $("#myModalEquipmentBody").html(response);
+            },
+            error: function (e) {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'Error');
+            },
+            complete: function () {
+                Loader.close();
+            }
+        });
+    }
+    function openUserModal() {
+        Loader.open();
+        $.ajax({
+            method: 'GET',
+            url: '@Url.Action("IndexPartial","Users")',
+            success: function (response) {
+                $("#myModalUser").modal('toggle');
+                $("#myModalUserLabel").html("select User");
+                $("#myModalUserBody").html(response);
+            },
+            error: function (e) {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'Error');
+            },
+            complete: function () {
+                Loader.close();
+            }
+        });
+    }
+
+
+</script>
+
+
+
+

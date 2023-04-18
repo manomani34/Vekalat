@@ -1,0 +1,197 @@
+﻿@using Application.Common.Dto.Paging
+@using static Vekalat.Application.Features.CategoryFeature
+@model PagingHandler<CategoryForViewDto>
+@{
+    ViewData["Title"] = "Category";
+}
+<!-- Bootstrap Toasts with Placement -->
+<div class="card mb-4">
+    <div class="row">
+        <div class="col-5"><h5 class="card-header">@ViewData["Title"]</h5></div>
+        <div class="col-2"></div>
+        <div class="col-5 text-end">
+            <a type="button" class="btn btn-info mx-3 mt-3" href="javascript:void(0)" onclick="CreateCategory()">Add Category</a>
+        </div>
+    </div>
+</div>
+<!--/ Bootstrap Toasts with Placement -->
+<div class="card">
+    <h5 class="card-header"></h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class=" text-primary">
+                <tr>
+                    <th class=" ">
+                        Category
+                    </th>
+                    <th class=" ">
+                        SubCategory
+                    </th>
+                    <th class=" ">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items.Any())
+                {
+                    @foreach (var item in Model.Items.Where(c => c.ParentId == null))
+                    {
+                        <tr id="group_@(item.Id)">
+                            <td class=" ">
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td class=" ">
+                                @if (item.Categories.Any())
+                                {
+                                    <a onclick="Show(@item.Id)" href="javascript:void(0)" class="btn btn-primary btn-block mb-3"> Show / Hide </a>
+                                    <ul style="display: none" id="tabH_@item.Id">
+                                        @foreach (var subGroup in item.Categories)
+                                        {
+                                            <li id="group_@(subGroup.Id)" class="mb-3  ">
+                                                @subGroup.Title
+
+                                                <a class="text-warning" onclick="EditCategory(@subGroup.Id)" href="javascript:void(0)">
+                                                    <i class="bx bx-edit"></i>
+                                                </a>
+                                                <a class="text-danger" href="javascript:void(0)" onclick="DeleteCategory(@subGroup.Id)">
+                                                    <i class="bx bx-trash"></i>
+                                                </a>
+
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </td>
+
+                            <td>
+                                <a class="btn btn-primary btn-sm" onclick="CreateCategory(@item.Id)" href="javascript:void(0)">
+                                    <i class="bx bx-plus"></i>
+                                </a>
+                                <a class="btn btn-warning btn-sm" onclick="EditCategory(@item.Id)" href="javascript:void(0)">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="DeleteCategory(@item.Id)">
+                                    <i class="bx bx-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class=" ">
+                            <p>No Record Found!</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal" data-bs-backdrop="static" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="myModalBody">
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        function CreateCategory(parentId) {
+            $.get('@Url.Action("Create")/' + parentId,
+                function (result) {
+                    $("#myModal").modal('toggle');
+                    $("#myModalLabel").html("Add New Category");
+                    $("#myModalBody").html(result);
+                });
+        }
+
+        function EditCategory(id) {
+            $.get('@Url.Action("Edit")/' + id,
+                function (result) {
+                    $("#myModal").modal('toggle');
+                    $("#myModalLabel").html("Edit Category");
+                    $("#myModalBody").html(result);
+                });
+        }
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success mr-3',
+                cancelButton: 'btn btn-danger '
+            },
+            buttonsStyling: false
+        });
+
+
+
+        function DeleteCategory(id) {
+            event.preventDefault();
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to delete?',
+                text: "It is not possible to restore a deleted record",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Return',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var btnId = id;
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: '@Url.Action("Delete")',
+                        data: { id: btnId },
+                        success: (response) => {
+                            debugger;
+                            if (response.status === 200) {
+                                swalWithBootstrapButtons.fire(
+                                    'Record Deleted',
+                                    '',
+                                    'success'
+                                );
+                                $('#group_' + id).fadeOut();
+                            }
+                            else {
+                                swalWithBootstrapButtons.fire(
+                                    'خطا',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                        },
+                        error: (e) => {
+                            swalWithBootstrapButtons.fire(
+                                'خطا',
+                                e.message,
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        };
+
+
+
+        function Show(id) {
+            $("#tabH_" + id).slideToggle("slow");
+        }
+    </script>
+}

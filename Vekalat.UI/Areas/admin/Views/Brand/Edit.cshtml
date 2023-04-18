@@ -1,0 +1,146 @@
+﻿@using System.Globalization
+@using Vekalat.Application.Common.Helpers
+@using static Vekalat.Application.Features.BrandFeature;
+@model CreateOrEditBrandDto
+@{
+    ViewData["Title"] = "Edit Brand";
+}
+
+@section Plugins
+    {
+    <script src="/admin/Plugins/ckeditor/ckeditor.js"></script>
+    <link href="/admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+}
+
+<div class="col-md-12">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <h5 class="card-header">@ViewData["Title"]</h5>
+                <div class="card-body">
+
+
+                    <form id="form">
+                        <input type="hidden" asp-for="Imagename" />
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-md-8 col-12">
+                                    <label class="">Title</label>
+                                    <input class="form-control" asp-for="Title" type="text">
+                                    <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class="form-group col-md-4 col-4" style="padding: 43px 14px 13px 15px;">
+                                    <input type="checkbox" asp-for="IsActive" class="form-check-input  mychk " id="status">
+                                    <label class="form-group-label mr-4 font-I text-success" for="status">Active</label>
+                                </div>
+
+                                 <div class="form-group">
+                                <div class="panel panel-custom panel-border">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Select Image</h5>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div>
+                                        </div>
+                                        <div class="dropify-loader">
+                                        </div>
+                                        <div class="dropify-errors-container">
+                                            <ul>
+                                            </ul>
+                                        </div>
+                                        <input asp-for="Image" type="file" class="dropify"
+                                               data-default-file="/images/brand-images/thumbnail/@Model.Imagename">
+
+                                        <div class="dropify-preview">
+                                            <span class="dropify-render"></span>
+                                            <div class="dropify-infos">
+                                                <div class="dropify-infos-inner">
+                                                    <p class="dropify-filename">
+                                                        <span class="file-icon"></span>
+                                                        <span class="dropify-filename-inner"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-warning">Save</button>
+                        <a href="@Url.Action("Index")" class="btn btn-danger">Cancle</a>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="/admin/plugins/fileuploads/js/dropify.min.js"></script>
+    <script>        
+
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Drag or click the file here',
+                'replace': 'Drag or click here to replace the file',
+                'remove': 'Remove',
+                'error': 'An error occurred'
+            },
+            error: {
+                'fileSize': 'The file size exceeds the limit! (1M).'
+            }
+        });
+
+        $("#form").on('submit', function (e) {
+            Loader.open();
+            e.preventDefault();
+            //if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            //formData.set('Description', CKEDITOR.instances['Description'].getData());
+
+            $.ajax({
+                method: 'PUT',
+                url: '@Url.Action("Edit")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('Your Data Is Updated', 'Success');
+                        location.href = '@Url.Action("Index")'
+                    } else {
+                        toastr.error(result.message, 'Error');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    var result = $.parseJSON(e);
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'Error');
+                },
+                complete: function () {
+                    Loader.close();
+                    $("#myModal").modal('hide');
+                }
+            });
+        });
+    </script>
+}

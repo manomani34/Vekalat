@@ -1,0 +1,110 @@
+﻿@using static Vekalat.Application.Features.EquipmentGalleryFeature
+@model CreateOrEditEquipmentGalleryDto
+
+<link href="/admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="form">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+            <div class="form-group col-12">
+                <div>
+                    <input type="checkbox" class="orm-check-input"
+                           asp-for="DisplayFront" />
+                    <label class="form-check-label" asp-for="DisplayFront"> </label>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>
+                    <span style="font-size:12px">Pic Image</span>
+                </label>
+
+                <div class="dropify-loader">
+                </div>
+                <div class="dropify-errors-container">
+                    <ul>
+                    </ul>
+                </div>
+                <input asp-for="Image" type="file" class="dropify" data-default-file="/images/equipmentGallery-images/@Model.Imagename">
+
+                <div class="dropify-preview">
+                    <span class="dropify-render"></span>
+                    <div class="dropify-infos">
+                        <div class="dropify-infos-inner">
+                            <p class="dropify-filename">
+                                <span class="file-icon"></span>
+                                <span class="dropify-filename-inner"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <span asp-validation-for="Image" class="text text-danger mb-2" ></span>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-warning submitBtn">Edit</button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+
+
+<script src="/admin/plugins/fileuploads/js/dropify.min.js"></script>
+<script>
+    $('.dropify').dropify({
+        messages: {
+            'default': 'Drag or click the file here',
+            'replace': 'Drag or click here to replace the file',
+            'remove': 'Remove',
+            'error': 'An error occurred'
+        },
+        error: {
+            'fileSize': 'The file size exceeds the limit! (1M).'
+        }
+    });
+    $("#form").on('submit', function (e) {
+        Loader.open();
+        e.preventDefault();
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+        debugger;
+        $.ajax({
+            method: 'PUT',
+            url: '@Url.Action("Edit")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                var result = response;
+
+                if (result.status === 422) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.warning(result.message);
+                    return;
+                }
+                if (result.status === 200) {
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    location.reload();
+                } else {
+                    toastr.error(result.message, 'خطا');
+                }
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function () {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'خطا');
+            },
+            complete: function () {
+                Loader.close();
+            }
+        });
+    });
+</script>

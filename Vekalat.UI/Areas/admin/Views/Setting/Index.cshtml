@@ -1,0 +1,89 @@
+﻿@model Vekalat.Core.Entities.Setting
+
+@{ ViewData["Title"] = "System Setting"; }
+
+@section Plugins{
+    <link href="/Admin/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+    <script src="/admin/Plugins/ckeditor/ckeditor.js"></script>
+}
+<div class="col-md-12">
+
+    <div class="panel panel-custom panel-border">
+        <div class="panel-heading">
+            <h3 class="panel-title">@ViewData["Title"]</h3>
+        </div>
+
+        <form role="form" method="post" asp-action="Index" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="panel-body">
+                <div></div>
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label for="tel">Tel:</label>
+                        <input asp-for="tel" type="text" class="form-control" id="tel" placeholder="Tel">
+                        <span asp-validation-for="tel" class="text text-danger mb-2"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-12">
+                        <label for="Mobil">Mobil</label>
+                        <input asp-for="Mobil" type="text" class="form-control" id="Mobil" placeholder="Mobil">
+                        <span asp-validation-for="Mobil" class="text text-danger mb-2"></span>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                        <div class="form-group col-md-12 col-12">
+                            <label class="">Address :</label>
+                            <input class="form-control" asp-for="Address">
+                            <span asp-validation-for="Address" class="text text-danger mb-2"></span>
+                        </div>
+                    </div>
+                <div class=" form-group col-md-12 col-12">
+                    <label class="">About us :</label>
+                    <textarea class="form-control" asp-for="about" id="description" type="text"></textarea>
+                    <span asp-validation-for="about" class="text text-danger mb-2"></span>
+                </div>
+
+                <div class=" form-group col-md-12 col-12" style="background-color:#2345">
+                    <label class="">contact Us:</label>
+                    <textarea class="form-control" asp-for="ContactUs" id="description2" type="text"></textarea>
+                    <span asp-validation-for="ContactUs" class="text text-danger mb-2"></span>
+                </div>
+
+                <div class=" form-group col-md-12 col-12">
+                    <label class="">Term:</label>
+                    <textarea class="form-control" asp-for="ghavanin" id="description3" type="text"></textarea>
+                    <span asp-validation-for="ghavanin" class="text text-danger mb-2"></span>
+                </div>
+
+                  <div class=" form-group col-md-12 col-12">
+                    <label class="">بخش انگلیسی:</label>
+                    <textarea class="form-control" asp-for="Labout" id="description4" type="text"></textarea>
+                    <span asp-validation-for="Labout" class="text text-danger mb-2"></span>
+                </div>
+                <button type="submit" class="btn btn-warning">Save</button>
+                <a href="@Url.Action("Index")" class="btn btn-danger">Exit</a>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="/admin/plugins/fileuploads/js/dropify.min.js"></script>
+    <script>
+        CKEDITOR.replace('description', {
+            customConfig: '/admin/Plugins/configs/Config.js'
+        });
+        CKEDITOR.replace('description2', {
+            customConfig: '/admin/Plugins/configs/Config.js'
+        });
+        CKEDITOR.replace('description3', {
+            customConfig: '/admin/Plugins/configs/Config.js'
+        });
+         CKEDITOR.replace('description4', {
+            customConfig: '/admin/Plugins/configs/Config.js'
+        });
+    </script>
+}

@@ -1,0 +1,53 @@
+﻿@using Application.Common.Dto.Paging;
+@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Common.Helpers;
+@using static Vekalat.Application.Features.StudioFeature;
+@model PagingHandler<StudioForViewDto>
+
+    <style>
+
+
+    .cards:hover {
+        transform: scale(1.05);
+        transition: all 0.3s;
+        }
+    </style>
+
+    <section class="container padding-top-1x padding-bottom-3x">
+    <h3 class="text-center mb-30">Studios</h3>
+    <div class="owl-carousel"  data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 30,
+&quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;576&quot;:{&quot;items&quot;:2},&quot;768&quot;
+:{&quot;items&quot;:3},&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
+
+        @if (Model.Items.Any())
+        {
+            @foreach (var item in Model.Items)
+            {
+                <div class="grid-item cards" style="padding:10px 0 10px 0">
+                    <div class="product-card">
+                        @*<div class="product-badge text-danger">50% Off</div>*@
+                        <a class="product-thumb" href="/StudioDetails/@item.Id/@item.Title.ToFixedPath()">
+                            <img src="/images/studio-images/thumbnail/@item.Imagename" alt="Product"></a>
+                        <h3 class="product-title"><a href="/StudioDetails/@item.Id/@item.Title.ToFixedPath()">@item.Title</a></h3>
+                        <h4 class="product-price">
+                            <del>$99.99</del>@item.Price
+                        </h4>
+                        <div class="product-buttons">
+                            @*<button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist">
+                                <i class="icon-heart"></i></button>*@
+                            <button class="btn btn-outline-primary btn-sm" 
+                            data-toast data-toast-type="success" data-toast-position="topRight"
+                            data-toast-icon="icon-circle-check" data-toast-title="Product"
+                            data-toast-message="successfuly added to cart!">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }      
+
+    </div>
+</section>
+
+
+
+

@@ -1,0 +1,267 @@
+﻿@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Common.Helpers;
+@using Vekalat.UI.ViewModels.EquipmentViewModels;
+@model EquipmentViewModel
+@{
+    ViewData["Title"] = "Equipment";
+}
+
+<!-- Page Title-->
+<div class="page-title" style="background-image:url('img/shop/bg-equipment.jpg');background-position:right">
+    <div class="container">
+        <div class="column">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a class="text-light" href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>@ViewData["Title"]</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-1">
+    <div class="row">
+        <!-- Products-->
+        <div class="col-xl-9 col-lg-8 order-lg-2">
+            <!-- Shop Toolbar-->
+            <div class="shop-toolbar padding-bottom-1x mb-2">
+                <div class="column">
+                    <div class="shop-sorting">
+                        <label for="sorting">Sort by:</label>
+                        <select class="form-control" id="sorting">
+                            <option>Popularity</option>
+                            <option>Low - High Price</option>
+                            <option>High - Low Price</option>
+                            <option>Avarage Rating</option>
+                            <option>A - Z Order</option>
+                            <option>Z - A Order</option>
+                        </select><span class="text-muted">Showing:&nbsp;</span><span>1 - 12 items</span>
+                    </div>
+                </div>
+                <div class="column">
+                </div>
+            </div>
+            <!-- Products Grid-->
+            <div class="isotope-grid cols-3 mb-2">
+                <div class="gutter-sizer"></div>
+                <div class="grid-sizer"></div>
+                <!-- Product-->
+                @if (Model.PagingHandler.Items.Any())
+                {
+                    @foreach (var item in Model.PagingHandler.Items)
+                    {
+                        <div class="grid-item">
+                            <div class="product-card">
+                                <a class="product-thumb" href="/EquipmentDetails/@item.Id/@item.Title.ToFixedPath()">
+                                    <img src="/images/equipment-images/thumbnail/@item.Imagename" alt="Product">
+                                </a>
+                                <h3 class="product-title"><a href="/EquipmentDetails/@item.Id/@item.Title.ToFixedPath()">@item.Title</a></h3>
+                                <h4 class="product-price">@item.Price ₺</h4>
+                                <div class="product-buttons">
+                                    <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i class="icon-heart"></i></button>
+                                    <a class="btn btn-outline-primary btn-sm" href="/EquipmentDetails/@item.Id/@item.Title.ToFixedPath()">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-sm-6">
+                        <div class="card mb-30">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">No Record Found!</h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- Pagination-->
+            <div class="d-flex">
+                @if (Model.PagingHandler.PageCount > 1)
+                {
+
+                    <div class="pagination">
+                        <div class="column text-left @(Model.PagingHandler.ActivePage <= 1 ? "disabled" : "")">
+                            <a class="btn btn-outline-secondary btn-sm" href="javascript:void(0)" onclick="ArrowPage(-1)">
+                                <i class="icon-arrow-left"></i>&nbsp;Prev
+                            </a>
+                        </div>
+                        <div class="column">
+                            <ul class="pages">
+                                @for (int counter = Model.PagingHandler.StartPage; counter <= Model.PagingHandler.EndPage; counter++)
+                                {
+                                    <li class="@(Model.PagingHandler.ActivePage == counter ? "active" : "")"><a onclick="SetPage(@counter)" href="javascript:void(0)">@counter</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="column text-right @(Model.PagingHandler.EndPage <= Model.PagingHandler.ActivePage ? "disabled" : "")">
+                            <a class="btn btn-outline-secondary btn-sm" onclick="ArrowPage(1)" href="javascript:void(0)">
+                                Next&nbsp;
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+                @*   <div class="col-md-2 col-12 mx-3">
+                <Select onchange="changeTake(this)" asp-for="Filter.Take" class="form-control">
+                <option value=10>10</option>
+                <option value=30>30</option>
+                <option value=50>50</option>
+                <option value=80>80</option>
+                <option value=100>100</option>
+                </Select>
+                </div>*@
+            </div>
+        </div>
+        <!-- Sidebar          -->
+        <div class="col-xl-3 col-lg-4 order-lg-1">
+            <button class="sidebar-toggle position-left" data-toggle="modal" data-target="#modalShopFilters"><i class="icon-layout"></i></button>
+            <aside class="sidebar sidebar-offcanvas">
+                <!-- Widget Categories-->
+                <section class="widget widget-categories">
+                    <h3 class="widget-title">Equipment Categories</h3>
+                    <ul>
+
+                        @if (Model.Categories.Any())
+                        {
+                            bool first = true;
+                            var expanded = "";
+                            @foreach (var menu in Model.Categories)
+                            {
+                                if (first)
+                                {
+                                    expanded = "expanded";
+                                }
+                                @if (menu.ParentId == null)
+                                {
+                                    <li class="has-children @expanded">
+                                        <a href="#">@menu.Title</a><span>(420)</span>
+                                        <ul>
+                                            @foreach (var subMenu in Model.Categories)
+                                            {
+                                                @if (subMenu.ParentId == menu.Id)
+                                                {
+                                                    <li><a href="#">@subMenu.Title</a><span>(180)</span></li>
+                                                }
+                                            }
+
+                                        </ul>
+                                    </li>
+
+                                    first = false;
+                                }
+
+                            }
+                        }
+
+
+
+
+                    </ul>
+                </section>
+                <!-- Widget Price Range-->
+                <section class="widget widget-categories">
+                    <h3 class="widget-title">Price Range</h3>
+                    <form class="price-range-slider" method="post" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
+                        <div class="ui-range-slider"></div>
+                        <footer class="ui-range-slider-footer">
+                            <div class="column">
+                                <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                            </div>
+                            <div class="column">
+                                <div class="ui-range-values">
+                                    <div class="ui-range-value-min">
+                                        ₺<span></span>
+                                        <input type="hidden">
+                                    </div>&nbsp;-&nbsp;
+                                    <div class="ui-range-value-max">
+                                        ₺<span></span>
+                                        <input type="hidden">
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </form>
+                </section>
+                <!-- Widget Brand Filter-->
+                <section class="widget">
+                    <h3 class="widget-title">Filter by Brand</h3>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="Sony">
+                        <label class="custom-control-label" for="Sony">Sony&nbsp;<span class="text-muted">(254)</span></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="Canon">
+                        <label class="custom-control-label" for="Canon">Canon&nbsp;<span class="text-muted">(39)</span></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="FUJIFILM">
+                        <label class="custom-control-label" for="FUJIFILM">FUJIFILM&nbsp;<span class="text-muted">(128)</span></label>
+                    </div>                   
+                </section>
+                <!-- Widget Size Filter-->
+                @*<section class="widget">
+                    <h3 class="widget-title">Filter by Size</h3>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="xl">
+                        <label class="custom-control-label" for="xl">XL&nbsp;<span class="text-muted">(208)</span></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="l">
+                        <label class="custom-control-label" for="l">L&nbsp;<span class="text-muted">(311)</span></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="m">
+                        <label class="custom-control-label" for="m">M&nbsp;<span class="text-muted">(485)</span></label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="s">
+                        <label class="custom-control-label" for="s">S&nbsp;<span class="text-muted">(213)</span></label>
+                    </div>
+                </section>*@
+                <!-- Promo Banner-->
+                <section class="promo-box" style="background-image: url(img/banners/02.jpg);">
+                    <!-- Choose between .overlay-dark (#000) or .overlay-light (#fff) with default opacity of 50%. You can overrride default color and opacity values via 'style' attribute.--><span class="overlay-dark" style="opacity: .45;"></span>
+                    <div class="promo-box-content text-center padding-top-3x padding-bottom-2x">
+                        <h4 class="text-light text-thin text-shadow">New Collection of</h4>
+                        <h3 class="text-bold text-light text-shadow">Camera</h3>
+                        <a class="btn btn-sm btn-primary" href="#">View Now</a>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+   @* <form method="post" asp-action="Equipment" id="subForm">
+        <input type="hidden" name="PageId" id="pageId" value="1" />
+        <input type="hidden" asp-for="Filter.Take" name="Take" />
+    </form>*@
+</div>
+
+
+
+@section Scripts
+    {
+    <script>
+        function changeTake(e) {
+            $("#pageId").val(1);
+            $("#Filter_Take").val($(e).val());
+            $("#subForm").submit();
+        }
+        function ArrowPage(pageId) {
+            var currentPage = @Model.PagingHandler.ActivePage;
+            currentPage += pageId;
+            SetPage(currentPage);
+        }
+        function SetPage(id) {
+            $("#pageId").val(id);
+            $("#subForm").submit();
+        }
+    </script>
+}

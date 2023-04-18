@@ -1,0 +1,42 @@
+﻿@model Vekalat.Application.Features.AccountFeature.LoginDto
+<div class="card card-container" style="background-color: #e6e6e6">
+
+    <p id="profile-name" class="profile-name-card"></p>
+
+    <form asp-action="LoginMain">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="font-weight: bold; font-size: 13px; color: #828282">
+            نام کاربری (ایمیل)
+        </label>
+        <input asp-for="Username" class="form-control" type="text" placeholder="نام کاربری (ایمیل یا کد ملی)">
+        <span asp-validation-for="Username" class="text-danger"></span>
+
+
+        <label class="control-label col-md-12 col-sm-12 col-xs-12" style="font-weight: bold; font-size: 13px; color: #828282; margin-top: 20px;">
+            کلمه عبور
+        </label>
+        <input asp-for="Password" style="margin-top: 15px;" class="form-control" type="password" placeholder="کلمه عبور">
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <br />
+        <button value="ورود به سایت" type="submit" class="btn btn-lg btn-success btn-block btn-signin"/>
+        <br />
+        <div class="forgPass">
+            <a style="color: rgb(64, 98, 112); font-weight: bold;" href="/PasswordRecovery" class="forgot-password">
+                <i class="fa fa-unlock-alt"></i>بازیابی کلمه عبور
+
+            </a>
+            <a style="color: rgb(64, 98, 112); font-weight: bold; margin-right: 20px" href="/Register" class="forgot-password">
+                <i class="fa fa-check-square-o"></i>ثبت نام
+
+            </a>
+        </div>
+
+    </form>
+
+    
+</div>
+
+        
+@*<partial name="_ValidationScriptsPartial" />*@

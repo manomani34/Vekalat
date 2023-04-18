@@ -1,0 +1,163 @@
+﻿@using System.Globalization
+@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Common.Helpers
+@using static Vekalat.Application.Features.BlogFeature;
+@model CreateOrEditBlogDto
+@{
+    ViewData["Title"] = "Edit Blog";
+}
+
+@section Plugins
+    {
+    <script src="/admin/Plugins/ckeditor/ckeditor.js"></script>
+    <link href="/admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+}
+<div class="col-md-12">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <h5 class="card-header">@ViewData["Title"]</h5>
+                <div class="card-body">
+                    <form id="form">
+                        <input type="hidden" asp-for="Imagename" />
+                        <input type="hidden" asp-for="UserId">
+                        <div class="panel-body">
+                            <div></div>
+                            <div class="row">
+                                <div class="form-group col-md-12 col-12 mb-3">
+                                    <label asp-for="Title" class="form-label"> </label>
+                                    <input class="form-control" asp-for="Title" type="text">
+                                    <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                                </div>
+                                <div class="form-group col-md-6 col-12 mb-3">
+                                    <label asp-for="Tag" class="form-label"> </label>
+                                    <input class="form-control" asp-for="Tag" type="text">
+                                    <span asp-validation-for="Tag" class="text text-danger mb-2"></span>
+                                </div>
+                                <div class="form-group col-md-2 col-12 mb-3">
+                                    <label class="form-label" asp-for="BlogSubjectId"> </label>
+                                    <select asp-for="BlogSubjectId" class="form-control"
+                                            asp-items="@ViewData["Subjects"] as List<SelectListItem>"></select>
+                                    <span asp-validation-for="BlogSubjectId" class="text text-danger mb-2"></span>
+                                </div>
+                                <div class="form-group col-md-2 col-12 mt-3">
+                                    <div class="form-check mt-3">
+                                        <input id="IsVisible" type="checkbox" class="orm-check-input"
+                                               asp-for="IsVisible" name="IsVisible" />
+                                        <label class="form-check-label" asp-for="IsVisible"> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" form-group col-md-12 col-12 mb-3">
+                                <label class="form-label" asp-for="Description"> </label>
+                                <textarea class="form-control" asp-for="Description" type="text"></textarea>
+                                <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="panel panel-custom panel-border">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Select Image</h5>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div>
+                                        </div>
+                                        <div class="dropify-loader">
+                                        </div>
+                                        <div class="dropify-errors-container">
+                                            <ul>
+                                            </ul>
+                                        </div>
+                                        <input asp-for="Image" type="file" class="dropify"
+                                               data-default-file="/images/blog-images/thumbnail/@Model.Imagename">
+
+                                        <div class="dropify-preview">
+                                            <span class="dropify-render"></span>
+                                            <div class="dropify-infos">
+                                                <div class="dropify-infos-inner">
+                                                    <p class="dropify-filename">
+                                                        <span class="file-icon"></span>
+                                                        <span class="dropify-filename-inner"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning">ویرایش</button>
+                        <a href="@Url.Action("Index")" class="btn btn-danger">بازگشت</a>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="/admin/plugins/fileuploads/js/dropify.min.js"></script>
+    <script>
+        CKEDITOR.replace('Description', {
+            customConfig: '/admin/Plugins/configs/Config.js'
+        });
+
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Drag or click the file here',
+                'replace': 'Drag or click here to replace the file',
+                'remove': 'Remove',
+                'error': 'An error occurred'
+            },
+            error: {
+                'fileSize': 'The file size exceeds the limit! (1M).'
+            }
+        });
+
+        $("#form").on('submit', function (e) {
+            Loader.open();
+            e.preventDefault();
+            //if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            formData.set('Description', CKEDITOR.instances['Description'].getData());
+
+            $.ajax({
+                method: 'PUT',
+                url: '@Url.Action("Edit")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        location.href = '@Url.Action("Index")'
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    var result = $.parseJSON(e);
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                },
+                complete: function () {
+                    Loader.close();
+                    $("#myModal").modal('hide');
+                }
+            });
+        });
+    </script>
+}

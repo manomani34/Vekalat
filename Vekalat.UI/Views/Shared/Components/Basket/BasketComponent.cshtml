@@ -1,0 +1,67 @@
+﻿@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Enums;
+@using static Vekalat.Application.Features.BasketFeature;
+@model Basket
+
+@if (Model != null && Model.BasketItems.Any())
+{
+
+    <a href="/basket"></a>
+    <i class="icon-bag"></i>
+    <span class="count">@Model.BasketItems.Sum(c=>c.Quantity)</span>
+    <span class="subtotal">@Model.TotalAmount</span>
+    <div class="toolbar-dropdown">
+        @foreach (var item in Model.BasketItems)
+        {
+            <div class="dropdown-product-item">
+
+                @if (item.BasketItemType == BasketItemType.Equipment)
+                {
+                    <span class="dropdown-product-remove" style="cursor:pointer" onclick="removeBasket(@item.ItemId,@((int)BasketItemType.Equipment))">
+                        <i class="icon-cross"></i>
+                    </span>
+                    <a class="dropdown-product-thumb" href="/EquipmentDetails/@item.ItemId/@item.Equipment.Title.ToFixedPath()">
+                        <img src="/images/equipment-images/thumbnail/@item.Equipment.Imagename" alt="Product">
+                    </a>
+                    <div class="dropdown-product-info">
+                        <a class="dropdown-product-title" href="/EquipmentDetails/@item.ItemId/@item.Equipment.Title.ToFixedPath()">@item.Equipment.Title</a>
+                        <span class="dropdown-product-details">@item.Quantity x @item.PriceWithDiscount</span>
+                    </div>
+                }
+                @if (item.BasketItemType == BasketItemType.Studio)
+                {
+                    <span class="dropdown-product-remove" style="cursor:pointer" onclick="removeBasket(@item.ItemId,@((int)BasketItemType.Studio))">
+                        <i class="icon-cross"></i>
+                    </span>
+                    <a class="dropdown-product-thumb" href="/StudioDetails/@item.ItemId/@item.Studio.Title.ToFixedPath()">
+                        <img src="/images/studio-images/thumbnail/@item.Studio.Imagename" alt="Product">
+                    </a>
+                    <div class="dropdown-product-info">
+                        <a class="dropdown-product-title" href="/StudioDetails/@item.ItemId/@item.Studio.Title.ToFixedPath()">@item.Studio.Title</a>
+                        <span class="dropdown-product-details">@item.Quantity x @item.PriceWithDiscount</span>
+                    </div>
+                }
+
+
+            </div>
+
+
+        }
+
+        <div class="toolbar-dropdown-group">
+            <div class="column"><span class="text-lg">Total:</span></div>
+            <div class="column text-right"><span class="text-lg text-medium">@Model.TotalAmount&nbsp;</span></div>
+        </div>
+        <div class="toolbar-dropdown-group">
+            <div class="column"><a class="btn btn-sm btn-block btn-secondary" href="/basket">View Cart</a></div>
+            <div class="column"><a class="btn btn-sm btn-block btn-success" href="/checkout">Checkout</a></div>
+        </div>
+    </div>
+}
+else
+{
+    <a href="javascript:void(0)"></a>
+    <i class="icon-bag"></i>
+    <span class="count">0</span>
+    <span class="subtotal">0</span>
+}

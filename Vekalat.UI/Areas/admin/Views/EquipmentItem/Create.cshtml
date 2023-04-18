@@ -1,0 +1,66 @@
+﻿@using static Vekalat.Application.Features.EquipmentItemFeature;
+@model CreateOrEditEquipmentItemDto
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="form">
+            <input type="hidden" asp-for="EquipmentId" />
+            <input type="hidden" asp-for="Id" value="0" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="text-right ">serial number</label>
+                <input asp-for="SerialNumber" class="form-control" />
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Add" class="btn btn-success submitBtn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $("#form").on('submit', function (e) {
+        Loader.open();
+
+        e.preventDefault();
+        //if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+        debugger;
+        $.ajax({
+            method: 'POST',
+            url: '@Url.Action("Create")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                var result = response;
+
+                if (result.status === 422) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.warning(result.message);
+                    return;
+                }
+                if (result.status === 200) {
+                    toastr.success('عملیات با موفقیت انجام شد', 'Success');
+                    location.reload();
+                } else {
+                    toastr.error(result.message, 'Errore');
+                }
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function () {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'Errore');
+            },
+            complete: function () {
+                Loader.close();
+                $("#myModal").modal('hide');
+            }
+        });
+    });
+</script>

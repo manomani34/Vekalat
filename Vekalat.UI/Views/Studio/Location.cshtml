@@ -1,0 +1,130 @@
+﻿@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Common.Helpers;
+@using Vekalat.UI.ViewModels.StudioViewModels;
+@model StudioViewModel
+@{
+    ViewData["Title"] = "Location";
+}
+
+<div class="offcanvas-wrapper">
+    <!-- Page Title-->
+    <div class="page-title" style="background-image:url('img/shop/bg-location.jpg');background-position:center">
+        <div class="container">
+            <div class="column">
+                <h1 class="text-light">@ViewData["Title"]</h1>
+            </div>
+            <div class="column">
+                <ul class="breadcrumbs">
+                    <li>
+                        <a class="text-light" href="/">Home</a>
+                    </li>
+                    <li class="separator">&nbsp;</li>
+                    <li>@ViewData["Title"]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container padding-bottom-2x mb-2">
+        <form method="post" asp-action="Studio" id="subForm">
+            <input type="hidden" name="PageId" id="pageId" value="1" />
+            <input type="hidden" asp-for="Filter.Take" name="Take" />
+        </form>
+
+        <div class="row">
+            @if (Model.PagingHandler.Items.Any())
+            {
+                @foreach (var item in Model.PagingHandler.Items)
+                {
+                    <div class="col-sm-6">
+                        <div class="card mb-30">
+                         
+                                 <iframe style="border: 0;" src="@item.Location" width="100%" height="400"
+                                 allowfullscreen="allowfullscreen"></iframe>
+                        
+                            <div class="card-body text-center">
+                                <h4 class="card-title">@item.Title</h4>
+                                <p class="text-muted">Starting from ₺@item.Price</p>
+                                 <p class="text-muted text-center">Starting from ₺@item.Address</p>
+                                <a class="btn btn-outline-primary btn-sm" href="/StudioDetails/@item.Id/@item.Title.ToFixedPath()">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+            else
+            {
+                <div class="col-sm-6">
+                    <div class="card mb-30">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">No Record Found!</h4>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="pt-2">
+            <div class="d-flex">
+                @if (Model.PagingHandler.PageCount > 1)
+                {
+
+                    <div class="pagination">
+                        <div class="column text-left @(Model.PagingHandler.ActivePage <= 1 ? "disabled" : "")">
+                            <a class="btn btn-outline-secondary btn-sm" href="javascript:void(0)" onclick="ArrowPage(-1)">
+                                <i class="icon-arrow-left"></i>&nbsp;Prev
+                            </a>
+                        </div>
+                        <div class="column">
+                            <ul class="pages">
+                                @for (int counter = Model.PagingHandler.StartPage; counter <= Model.PagingHandler.EndPage; counter++)
+                                {
+                                    <li class="@(Model.PagingHandler.ActivePage == counter ? "active" : "")"><a onclick="SetPage(@counter)" href="javascript:void(0)">@counter</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="column text-right @(Model.PagingHandler.EndPage <= Model.PagingHandler.ActivePage ? "disabled" : "")">
+                            <a class="btn btn-outline-secondary btn-sm" onclick="ArrowPage(1)" href="javascript:void(0)">
+                                Next&nbsp;
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+             @*   <div class="col-md-2 col-12 mx-3">
+                    <Select onchange="changeTake(this)" asp-for="Filter.Take" class="form-control">
+                        <option value=10>10</option>
+                        <option value=30>30</option>
+                        <option value=50>50</option>
+                        <option value=80>80</option>
+                        <option value=100>100</option>
+                    </Select>
+                </div>*@
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts
+    {
+    <script>
+        function changeTake(e) {
+            $("#pageId").val(1);
+            $("#Filter_Take").val($(e).val());
+            $("#subForm").submit();
+        }
+        function ArrowPage(pageId) {
+            var currentPage = @Model.PagingHandler.ActivePage;
+            currentPage += pageId;
+            SetPage(currentPage);
+        }
+        function SetPage(id) {
+            $("#pageId").val(id);
+            $("#subForm").submit();
+        }
+    </script>
+}
+

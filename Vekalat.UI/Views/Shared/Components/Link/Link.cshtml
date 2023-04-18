@@ -1,0 +1,8 @@
+﻿@model List<Vekalat.Core.Entities.Link>
+
+@foreach (var item in Model)
+{
+    <li><a target="_blank" href="@Html.DisplayFor(modelItem => item.Url)">@Html.DisplayFor(modelItem => item.Title)</a></li>
+}
+
+

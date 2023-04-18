@@ -1,0 +1,204 @@
+﻿@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Common;
+@using Vekalat.Application.Common.Helpers;
+@using Vekalat.UI.ViewModels.BlogViewModels;
+@model BlogViewModel
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>Blog</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>Blog</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-1">
+    <div class="row">
+        <!-- Blog Posts-->
+        <div class="col-xl-9 col-lg-8 order-lg-2">
+            <!-- Post-->
+            @if (Model.PagingHandler.Items.Any())
+            {
+                @foreach (var item in Model.PagingHandler.Items)
+                {
+                    <article class="row">
+                        <div class="col-md-3 order-md-2">
+                            <ul class="post-meta">
+                                <li><i class="icon-clock"></i><a href="#">&nbsp;
+                                    @String.Format("{0:dd MMM yyyy}", item.CreationTime)
+                                </a></li>
+                                @*<li><i class="icon-head"></i>&nbsp;@item.Member.LastName</li>
+                        <li><i class="icon-tag"></i><a href="#">&nbsp;@item.News_Subject.Title</a></li>*@
+                                <li><i class="icon-heart"></i><a href="#">&nbsp;@item.LikeCount Like</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-9 order-md-1 blog-post">
+                            <a class="post-thumb" href="/BlogDetails/@item.Id/@item.Title.ToFixedPath()">
+                                <img src="/Images/blog-images/thumbnail/@item.Imagename" alt="Post">
+                            </a>
+                            <h3 class="post-title"><a href="/BlogDetails/@item.Id/item.Title.ToFixedPath()">@item.Title</a></h3>
+                            <p>
+                                @Html.Raw(item.Description.ToFixedTextLength(350))
+                                <a href='/BlogDetails/@item.Id/@item.Title.ToFixedPath()' class='text-medium'>Read More</a>
+                            </p>
+                        </div>
+                    </article>
+                }
+            }
+
+
+
+
+            <!-- Pagination-->
+            <div class="page-container ptb-60">
+                <div class="container">
+                    <div class="row row-rl-10 row-tb-20">
+                        <div class="page-content col-xs-12 col-lg-10 col-lg-offset-1">
+                            <!-- Blog Area -->
+                            <div class="blog-area blog-classic">
+                                <div class="row row-tb-20">
+                                    <!-- Blog Post -->
+                                    <!-- End Blog Post -->
+                                </div>
+                                @* @if (Model.PagingHandler.PageCount > 1)
+                                {
+                                <nav class="custom-pagination" aria-label="Page navigation example">
+                                <ol class="pagination" reversed="reversed">
+
+                                <li class="page-item @(Model.ActivePage <= 1 ? "disabled" : "") ">
+                                <a onclick="ArrowPage(-1)" class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">»</span>
+                                </a>
+                                </li>
+                                @for (int counter = Model.StartPage; counter <= Model.EndPage; counter++)
+                                {
+                                <li class="page-item @(Model.ActivePage == counter ? "active" : "")"><a onclick="SetPage(@counter)" class="page-link" href="#">@counter</a></li>
+                                }
+
+                                <li class="page-item @(Model.EndPage <= Model.ActivePage ? "disabled" : "")">
+                                <a onclick="ArrowPage(1)" class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">«</span>
+                                </a>
+                                </li>
+
+                                </ol>
+                                </nav>
+                                }*@
+                            </div>
+                            <!-- End Blog Area -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* <nav class="pagination">
+            <div class="column">
+            <ul class="pages">
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li>...</li>
+            <li><a href="#">12</a></li>
+            </ul>
+            </div>
+            <div class="column text-right hidden-xs-down"><a class="btn btn-outline-secondary btn-sm" href="#">Next&nbsp;<i class="icon-arrow-right"></i></a></div>
+            </nav>*@
+        </div>
+        <!-- Sidebar          -->
+        <div class="col-xl-3 col-lg-4 order-lg-1">
+            <button class="sidebar-toggle position-left" data-toggle="modal" data-target="#modalBlogSidebar"><i class="icon-layout"></i></button>
+            <aside class="sidebar sidebar-offcanvas">
+                <!-- Widget Search-->
+                <section class="widget">
+                    <form class="input-group form-group" method="get">
+                        <span class="input-group-btn">
+                            <button type="submit"><i class="icon-search"></i></button>
+                        </span>
+                        <input class="form-control" type="search" placeholder="Search blog">
+                    </form>
+                </section>
+                <!-- Widget Categories-->
+                <section class="widget widget-categories">
+                    <h3 class="widget-title">Subjects</h3>
+                    <ul>
+                        <li><a href="#">Editor's Choice</a><span>(24)</span></li>
+                        <li><a href="#">Fashion</a><span>(12)</span></li>
+                        <li><a href="#">Travel</a><span>(5)</span></li>
+                        <li><a href="#">Online Shopping</a><span>(7)</span></li>
+                        <li><a href="#">Closing Design</a><span>(3)</span></li>
+                    </ul>
+                </section>
+                <!-- Widget Featured Posts-->
+                <section class="widget widget-featured-posts">
+                    <h3 class="widget-title">Featured Posts</h3>
+                    <!-- Entry-->
+                    <div class="entry">
+                        <div class="entry-thumb"><a href="blog-single-rs.html"><img src="img/blog/widget/01.jpg" alt="Post"></a></div>
+                        <div class="entry-content">
+                            <h4 class="entry-title"><a href="blog-single-rs.html">Trending Winter Boots</a></h4><span class="entry-meta">by Olivia Reyes</span>
+                        </div>
+                    </div>
+                    <!-- Entry-->
+                    <div class="entry">
+                        <div class="entry-content">
+                            <h4 class="entry-title"><a href="blog-single-rs.html">Global Travel And Vacations Luxury Travel On A Tight Budget</a></h4><span class="entry-meta">by Logan Coleman</span>
+                        </div>
+                    </div>
+                    <!-- Entry-->
+                    <div class="entry">
+                        <div class="entry-thumb"><a href="blog-single-rs.html"><img src="img/blog/widget/02.jpg" alt="Post"></a></div>
+                        <div class="entry-content">
+                            <h4 class="entry-title"><a href="blog-single-rs.html">Hoop Earrings A Style From History</a></h4><span class="entry-meta">by Cynthia Gomez</span>
+                        </div>
+                    </div>
+                </section>
+                <!-- Widget Tags-->
+                <section class="widget widget-tags">
+                    <h3 class="widget-title">Popular Tags</h3><a class="tag" href="#">#design</a><a class="tag" href="#">#fashion</a><a class="tag" href="#">#travelling</a><span class="tag active">#active tag</span><a class="tag" href="#">#shopping</a>
+                </section>
+                <!-- Promo Banner-->
+                <section class="promo-box" style="background-image: url(img/banners/01.jpg);">
+                    <!-- Choose between .overlay-dark (#000) or .overlay-light (#fff) with default opacity of 50%. You can overrride default color and opacity values via 'style' attribute.--><span class="overlay-dark" style="opacity: .35;"></span>
+                    <div class="promo-box-content text-center padding-top-2x padding-bottom-2x">
+                        <h3 class="text-bold text-light text-shadow">New 2017<br>Handbag Collection</h3>
+                        <h4 class="text-light text-thin text-shadow">has just arrived!</h4><a class="btn btn-sm btn-primary" href="shop-grid-ls.html">Shop Now</a>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*@section Scripts{
+    <script>
+        function ArrowPage(pageId) {
+            var currentPage = @Model.ActivePage;
+            currentPage += pageId;
+            SetPage(currentPage);
+        }
+
+        function SetPage(id) {
+            $("#pageId").val(id);
+            $("#subForm").submit();
+        }
+    </script>
+}*@
+
+

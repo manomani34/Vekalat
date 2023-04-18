@@ -1,0 +1,148 @@
+﻿@model Vekalat.Application.Features.AccountFeature.LoginDto
+@{
+    ViewData["Title"] = "ورود";
+    Layout = "_LayoutAccount";
+}
+<!-- Page Title-->
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>Login / Register Account</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>
+                    <a href="@Url.Action("Login", "Account")">Account</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>Login / Register</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="login-box" id="LoginForm" asp-action="Login">
+                <h4 class="margin-bottom-1x">Or using form below</h4>
+                <div class="form-group input-group">
+                    <input class="form-control" asp-for="Username" type="text"
+                           placeholder="Email" required>
+                    <span class="input-group-addon"><i class="icon-mail"></i></span>
+                </div>
+                <div class="form-group input-group">
+                    <input class="form-control" asp-for="Password" type="password"
+                           placeholder="Password" required><span class="input-group-addon">
+                        <i class="icon-lock"></i>
+                    </span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <div class="d-flex flex-wrap justify-content-between padding-bottom-1x">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="remember_me" checked>
+                        <label class="custom-control-label" for="remember_me">Remember me</label>
+                    </div><a class="navi-link" href="/PasswordRecovery">Forgot password?</a>
+                </div>
+                <div class="text-center text-sm-right">
+                    <button class="btn btn-primary margin-bottom-none" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="padding-top-3x hidden-md-up"></div>
+            <h3 class="margin-bottom-1x">No Account? Register</h3>
+            <p>Registration takes less than a minute but gives you full control over your orders.</p>
+            <form class="row" method="post">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-fn">First Name</label>
+                        <input class="form-control" type="text" id="reg-fn" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-ln">Last Name</label>
+                        <input class="form-control" type="text" id="reg-ln" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-email">E-mail Address</label>
+                        <input class="form-control" type="email" id="reg-email" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input class="form-control" type="text" id="reg-phone" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-pass">Password</label>
+                        <input class="form-control" type="password" id="reg-pass" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-pass-confirm">Confirm Password</label>
+                        <input class="form-control" type="password" id="reg-pass-confirm" required>
+                    </div>
+                </div>
+                <div class="col-12 text-center text-sm-right">
+                    <button class="btn btn-primary margin-bottom-none" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $("#LoginForm").on('submit', function (e) {
+            debugger;
+            e.preventDefault();
+            //if ($("#LoginForm").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            debugger;
+            $.ajax({
+                method: 'POST',
+                url: '/Login',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        location.href = '/admin'
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    debugger;
+                    var result = e;
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        });
+
+    </script>
+}

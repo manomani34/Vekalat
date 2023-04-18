@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>@ViewData["Title"]</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="DIGIONEPLUS - Universal E-Commerce Template">
+    <meta name="keywords" content="shop, e-commerce, modern, flat style, responsive, online store, business, mobile, blog, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Digioneplus">
+    <!-- Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Favicon and Apple Icons-->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">
+    <!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="~/css/vendor.min.css">
+    <!-- Main Template Styles-->
+    <link id="mainStyles" rel="stylesheet" media="screen" href="~/css/styles.min.css">
+    <!-- Customizer Styles-->
+    <link rel="stylesheet" media="screen" href="~/customizer/customizer.min.css">
+    <!-- Google Tag Manager-->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T4DJFPZ');
+
+    </script>
+    <!-- Modernizr-->
+    <script src="~/js/modernizr.min.js"></script>
+    <link href="~/util/toast/css/jquery.toast.css" rel="stylesheet" />
+    <link href="~/util/loader/loader.css" rel="stylesheet" />
+    @RenderSection("Plugins", false)
+</head>
+<body>
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+        <iframe src="http://www.googletagmanager.com/ns.html?id=GTM-T4DJFPZ" height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+    </noscript>
+    <!-- Template Customizer-->
+    <div class="customizer-backdrop"></div>
+    @*   <div class="customizer">
+    <div class="customizer-toggle"><i class="icon-cog"></i></div>
+    <div class="customizer-body">
+    <div class="btn-group mb-4">
+    <button class="btn btn-white btn-rounded btn-block dropdown-toggle my-0" type="button" data-toggle="dropdown">Choose Template</button>
+    <div class="dropdown-menu"><a class="dropdown-item" href="index.html">Template 1 (Clothing)</a><a class="dropdown-item" href="http://themes.rokaux.com/unishop/v3.1/template-2/index.html">Template 2 (Furniture)</a><a class="dropdown-item" href="http://themes.rokaux.com/unishop/v3.1/template-3/index.html">Template 3 (Electronics)</a></div>
+    </div>
+    <div class="customizer-title">Choose color</div>
+    <div class="customizer-color-switch"><a class="active" href="#" data-color="default" style="background-color: #0da9ef;"></a><a href="#" data-color="2ecc71" style="background-color: #2ecc71;"></a><a href="#" data-color="f39c12" style="background-color: #f39c12;"></a><a href="#" data-color="e74c3c" style="background-color: #e74c3c;"></a></div>
+    <div class="customizer-title">Header option</div>
+    <div class="form-group">
+    <select class="form-control form-control-rounded input-light" id="header-option">
+    <option value="sticky">Sticky</option>
+    <option value="static">Static</option>
+    </select>
+    </div>
+    <div class="customizer-title">Footer option</div>
+    <div class="form-group">
+    <select class="form-control form-control-rounded input-light" id="footer-option">
+    <option value="dark">Dark</option>
+    <option value="light">Light</option>
+    </select>
+    </div><a class="btn btn-primary btn-rounded btn-block margin-bottom-none" href="https://wrapbootstrap.com/theme/unishop-universal-e-commerce-template-WB0148688/?ref=rokaux">Buy Unishop</a>
+    </div>
+    </div>*@
+  
+    
+    <partial name="_Header" />
+
+    <div class="offcanvas-wrapper">
+
+        @RenderBody()
+        <!-- Site Footer-->
+        @(await Component.InvokeAsync("Footer"))
+    </div>
+    <!-- Back To Top Button-->
+    <a class="scroll-to-top-btn" href="#"><i class="icon-arrow-up"></i></a>
+    <!-- Backdrop-->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Back To Top Button-->
+    <a class="scroll-to-top-btn" href="#"><i class="icon-arrow-up"></i></a>
+    <!-- Backdrop-->
+    <div class="site-backdrop"></div>
+    <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
+    <script src="~/js/vendor.min.js"></script>
+    <script src="~/js/scripts.min.js"></script>
+    <!-- Customizer scripts-->
+    <script src="customizer/customizer.min.js"></script>
+    <script src="/util/toast/js/jquery.toast.js"></script>
+    <script src="/util/toast/js/toast.js"></script>
+    <script src="/util/loader/loader.js"></script>
+    @RenderSection("Scripts", false)
+
+    <script>
+        function removeBasket(itemId, itemType, basketType = 1) {
+            $.ajax({
+                method: 'POST',
+                url: `/basket/Remove/${itemId}?type=${itemType}`,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        loadBasket(basketType);
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        }
+
+        function clearBasket() {
+            $.ajax({
+                method: 'POST',
+                url: `/basket/ClearBasket`,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        loadBasket(2);
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        }
+
+
+        function AddBasket(itemId, itemType) {
+            $.ajax({
+                method: 'POST',
+                url: `/basket/AddToBasket/${itemId}?type=${itemType}`,
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        loadBasket(1);
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        }
+
+        function addVoucher() {
+            var code = $("#Voucher").val();
+            $.ajax({
+                method: 'POST',
+                url: `/basket/ApplayVoucher`,
+                data: { code: code },
+                success: function (response) {
+                    var result = response;
+
+                    if (result.status === 422) {
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        let res = result.result;
+                        if (res.status === 404) {
+                            toastr.error(res.message);
+                        }
+                        if (res.status === 300) {
+                            toastr.warning(res.message);
+                        }
+                        if (res.status === 200) {
+                            toastr.success(res.message);
+                        }
+                        loadItem(2);
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        }
+
+        function UpdateBasket() {
+            debugger;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($("#basketform")[0]);
+            let test = JSON.stringify(Object.fromEntries(formData));
+            debugger;
+            $.ajax({
+                method: 'POST',
+                url: `/basket/UpdateBasket`,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+                    $(".submitBtn").prop('disabled', false);
+
+                    if (result.status === 422) {
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        loadBasket(2);
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        };
+
+        function changePayment(type) {
+            debugger;
+            $(".submitBtn").prop('disabled', true);
+            debugger;
+            $.ajax({
+                method: 'POST',
+                url: `/Checkout/changePayment`,
+                data: { type: type },
+                success: function (response) {
+                    var result = response;
+                    $(".submitBtn").prop('disabled', false);
+
+                    if (result.status === 422) {
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                        loadItem(2);
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        };
+
+        function loadBasket(type) {
+            if (type === 2) {
+                $.ajax({
+                    method: 'GET',
+                    url: `/basket/FullPartialBasket`,
+                    success: function (response) {
+                        $("#fullbasket").html(response)
+                    },
+                    error: function (e) {
+                        var result = $.parseJSON(e);
+                        toastr.error(result.message, 'خطا');
+                    }
+                });
+                $.ajax({
+                    method: 'GET',
+                    url: `/basket/PartialBasket`,
+                    success: function (response) {
+                        $("#Basket").html(response)
+                    },
+                    error: function (e) {
+                        var result = $.parseJSON(e);
+                        toastr.error(result.message, 'خطا');
+                    }
+                });
+            }
+            if (type === 1) {
+                $.ajax({
+                    method: 'GET',
+                    url: `/basket/PartialBasket`,
+                    success: function (response) {
+                        debugger;
+                        $("#Basket").html(response)
+                    },
+                    error: function (e) {
+                        var result = $.parseJSON(e);
+                        toastr.error(result.message, 'خطا');
+                    }
+                });
+            }
+
+        }
+
+    </script>
+    <script>
+        $("#LoginForm").on('submit', function (e) {
+            debugger;
+            e.preventDefault();
+            //if ($("#LoginForm").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            debugger;
+            $.ajax({
+                method: 'POST',
+                url: '/Login',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+                    debugger;
+
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        location.href = '@Url.Action("Index")'
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    debugger;
+                    var result = e;
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        });
+        $("#RegisterForm").on('submit', function (e) {
+            debugger;
+            e.preventDefault();
+            //if ($("#RegisterForm").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+            debugger;
+            $.ajax({
+                method: 'POST',
+                url: '/Register',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var result = response;
+                    debugger;
+
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    if (result.status === 200) {
+                        location.href = '@Url.Action("Index")'
+                    } else {
+                        toastr.error(result.message, 'خطا');
+                    }
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+                    debugger;
+                    var result = e;
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        });
+    </script>
+</body>
+
+
+
+
+
+
+
+
+

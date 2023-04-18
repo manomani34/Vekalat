@@ -1,0 +1,203 @@
+﻿@{
+    ViewData["Title"] = "Reservation";
+}
+@section Plugins{
+    <link href="/util/calendar/fullcalendar/dist1/fullcalendar.min.css" rel="stylesheet" />
+    <link href="/util/calendar/calendar.css" rel="stylesheet" />
+}
+
+<div class="card">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body b-l calender-sidebar">
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="equipmentReservation">
+</div>
+
+
+<div class="modal fade" id="myModal" data-bs-backdrop="static" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="myModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalUser" data-bs-backdrop="static" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalUserLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="myModalUserBody">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalEquipment" data-bs-backdrop="static" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalEquipmentLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="myModalEquipmentBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script src="/util/calendar/moment/min/moment.min.js"></script>
+    <script src="/util/calendar/fullcalendar/dist1/fullcalendar.min.js"></script>
+    <script src="/util/calendar/cal-init.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        function CreateEvent(item) {
+            Loader.open();
+            $.ajax({
+                method: 'GET',
+                url: '@Url.Action("Create")',
+                data: item,
+                success: function (response) {
+                    $("#myModal").modal('toggle');
+                    $("#myModalLabel").html("New Event");
+                    $("#myModalBody").html(response);
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'Error');
+                },
+                complete: function () {
+                    Loader.close();
+                }
+            });
+        }
+
+        function ShowEvent(id) {
+            Loader.open();
+            $.ajax({
+                method: 'GET',
+                url: '@Url.Action("Detail")/' + id,
+                success: function (response) {
+                    $("#myModal").modal('toggle');
+                    $("#myModalLabel").html("Event detail");
+                    $("#myModalBody").html(response);
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'Error');
+                },
+                complete: function () {
+                    Loader.close();
+                }
+            });
+        }
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ',
+                cancelButton: 'btn btn-danger ml-3'
+            },
+            buttonsStyling: false
+        });
+
+        function Delete(id) {
+            $("#myModal").modal('hide');
+            event.preventDefault();
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to delete?',
+                text: "It is not possible to restore a deleted record",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Return',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var btnId = id;
+
+                    Loader.open();
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: '@Url.Action("Delete")',
+                        data: { id: btnId },
+                        success: (response) => {
+                            if (response.status === 200) {
+                                swalWithBootstrapButtons.fire(
+                                    'Record Deleted',
+                                    '',
+                                    'success'
+                                );
+                                $("#table_" + id).fadeOut();
+                            }
+                            else {
+                                swalWithBootstrapButtons.fire(
+                                    'error',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                        },
+                        error: (e) => {
+                            swalWithBootstrapButtons.fire(
+                                'error',
+                                e.message,
+                                'error'
+                            );
+                        },
+                        complete: function () {
+                            $.CalendarApp.applayDelete(btnId);
+                            Loader.close();
+                        }
+                    });
+                }
+            });
+        };
+
+        $(document).ready(function () {
+            loadReservation();
+        });
+        function loadReservation() {
+            Loader.open();
+            $.ajax({
+                method: 'GET',
+                url: '@Url.Action("IndexPartial")',
+                success: function (response) {
+                    $("#equipmentReservation").html(response);
+                },
+                error: function (e) {
+                    var result = $.parseJSON(e);
+                    toastr.error(result.message, 'Error');
+                },
+                complete: function () {
+                    Loader.close();
+                }
+            });
+        }
+    </script>
+
+}

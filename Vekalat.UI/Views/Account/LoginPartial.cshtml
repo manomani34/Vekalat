@@ -1,0 +1,105 @@
+﻿@model Vekalat.Application.Features.AccountFeature.LoginDto
+
+<form id="quick_form" asp-action="Login" class="form-border" style="background-color: #ffffff">
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3>ورود اعضا</h3>
+        </div>
+        <div class="section-title">
+            <h2 class="mb-0">@ViewData["Message"]</h2>
+        </div>
+        <div class="form-group">
+            <input asp-for="Username" type="text"  class="form-control" onblur="enCheck(this)" placeholder="نام کاربری ..." required="">
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="Password" type="password" onblur="enCheck(this)" class="form-control" placeholder="کلمه عبور ..." required="">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-md-12">
+            <button type="submit" class="btn-main btn-fullwidth submit">
+                ورود
+            </button>
+        </div>
+        <div id="spnregister">اگر عضو سایت نیستید <a class="aregister" href="/register">ثبت نام کنید</a></div>
+        <div id="spnforgetpass">
+            <span>
+                <a class="aregister" href="/ForgetPassword">درخواست فراموشی کلمه عبور</a>
+            </span>
+        </div>
+    </div>
+</form>
+
+
+<partial name="_ValidationScriptsPartial" />
+<script src="~/util/sweetalert2.js"></script>
+<script src="/Js/Total.js"></script>
+<script>
+
+
+        $("#quick_form").on('submit', function (e) {
+            //debugger;
+            e.preventDefault();
+            $(".submit").prop('disabled', true);
+
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("Login")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    debugger;
+                    $(".submit").prop('disabled', false);
+                    var result = $.parseJSON(response);
+
+                    if (result.status === 200) {
+                        var role = result.result.data;
+
+                        $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("UpdateIsn","Home")',
+                                success: (response) => {
+
+                                },
+                                error: () => {
+
+                                }
+                            });
+
+                        switch (role) {
+                        case 1:location.replace('/Admin');
+                            break;
+                        case 2: location.replace('/User');
+                            break;
+                        default:
+                        }
+
+                    }
+                    else {
+                        var message = result.message;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطا',
+                            text: message,
+                        });
+                    }
+
+                },
+                error: function (response) {
+                    var result = $.parseJSON(response);
+                    var message = result.message;
+                    $(".submit").prop('disabled', false);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطا',
+                        text: message
+                    });
+                }
+            });
+        });
+
+</script>

@@ -1,0 +1,520 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>fceea747-a8ae-4030-ae2c-1f13264d1cc2</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\admin\Data\**" />
+    <Compile Remove="Areas\admin\Models\**" />
+    <Compile Remove="Areas\admin\ViewModels\AddressViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\CityViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\DiscountViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\OrderViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\PaymentViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\ProvinceViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\ShipmentViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\SliderViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\VoucherHistoryViewModels\**" />
+    <Compile Remove="Areas\admin\ViewModels\VoucherViewModels\**" />
+    <Compile Remove="wwwroot\pdf\**" />
+    <Content Remove="Areas\admin\Data\**" />
+    <Content Remove="Areas\admin\Models\**" />
+    <Content Remove="Areas\admin\ViewModels\AddressViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\CityViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\DiscountViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\OrderViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\PaymentViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\ProvinceViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\ShipmentViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\SliderViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\VoucherHistoryViewModels\**" />
+    <Content Remove="Areas\admin\ViewModels\VoucherViewModels\**" />
+    <Content Remove="wwwroot\pdf\**" />
+    <EmbeddedResource Remove="Areas\admin\Data\**" />
+    <EmbeddedResource Remove="Areas\admin\Models\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\AddressViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\CityViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\DiscountViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\OrderViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\PaymentViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\ProvinceViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\ShipmentViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\SliderViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\VoucherHistoryViewModels\**" />
+    <EmbeddedResource Remove="Areas\admin\ViewModels\VoucherViewModels\**" />
+    <EmbeddedResource Remove="wwwroot\pdf\**" />
+    <None Remove="Areas\admin\Data\**" />
+    <None Remove="Areas\admin\Models\**" />
+    <None Remove="Areas\admin\ViewModels\AddressViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\CityViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\DiscountViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\OrderViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\PaymentViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\ProvinceViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\ShipmentViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\SliderViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\VoucherHistoryViewModels\**" />
+    <None Remove="Areas\admin\ViewModels\VoucherViewModels\**" />
+    <None Remove="wwwroot\pdf\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Reports\BookReport.rdlc" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<!--<PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" />-->
+		<PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Vekalat.Infrastructure.Data.Migrations\Vekalat.Infrastructure.Data.Migrations.csproj" />
+		<ProjectReference Include="..\Vekalat.InfraStructure.Data\Vekalat.InfraStructure.Data.csproj" />
+		<ProjectReference Include="..\Vekalat.InfraStructure.Persistant\Vekalat.InfraStructure.Persistant.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Ahmaditame.Tools">
+	    <HintPath>..\Ahmaditame.Tools.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\Images\brand-images\" />
+	  <Folder Include="wwwroot\Images\TeamLogo-images\" />
+	  <Folder Include="wwwroot\Images\Team-gallery\" />
+	  <Folder Include="wwwroot\Images\Team-images\" />
+	  <Folder Include="wwwroot\img\shop\products\" />
+	  <Folder Include="wwwroot\img\video-covers\" />
+	  <Folder Include="wwwroot\SlidPic\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Areas\admin\Views\Categories\Index.cshtml" />
+	  <None Include="Areas\admin\Views\Categories\Create.cshtml" />
+	  <None Include="Areas\admin\Views\Categories\Edit.cshtml" />
+	  <None Include="Areas\admin\Views\EquipmentReservation\Edit.cshtml" />
+	  <None Include="Areas\admin\Views\Equipment\Create.cshtml" />
+	  <None Include="Areas\admin\Views\Equipment\Edit.cshtml" />
+	  <None Include="Areas\admin\Views\Equipment\Index.cshtml" />
+	  <None Include="Areas\admin\Views\StudioGallery\Create.cshtml" />
+	  <None Include="Areas\admin\Views\StudioGallery\Edit.cshtml" />
+	  <None Include="Areas\admin\Views\StudioGallery\Index.cshtml" />
+	  <None Include="Views\Account\Login.cshtml" />
+	  <None Include="Views\Account\LoginMain.cshtml" />
+	  <None Include="Views\Account\LoginPartial.cshtml" />
+	  <None Include="Views\Account\PasswordRecovery.cshtml" />
+	  <None Include="Views\Shared\Components\Footer\Footer.cshtml" />
+	  <None Include="Views\Shared\Components\Brand\Brand.cshtml" />
+	  <None Include="Views\Shared\Components\Studios\Studios.cshtml" />
+	  <None Include="Views\Shared\Components\Slide\Slide.cshtml" />
+	  <None Include="Views\Shared\Components\Link\Link.cshtml" />
+	  <None Include="wwwroot\admin\assets\js\config.js" />
+	  <None Include="wwwroot\admin\assets\js\dashboards-analytics.js" />
+	  <None Include="wwwroot\admin\assets\js\extended-ui-perfect-scrollbar.js" />
+	  <None Include="wwwroot\admin\assets\js\form-basic-inputs.js" />
+	  <None Include="wwwroot\admin\assets\js\main.js" />
+	  <None Include="wwwroot\admin\assets\js\pages-account-settings-account.js" />
+	  <None Include="wwwroot\admin\assets\js\ui-modals.js" />
+	  <None Include="wwwroot\admin\assets\js\ui-popover.js" />
+	  <None Include="wwwroot\admin\assets\js\ui-toasts.js" />
+	  <None Include="wwwroot\admin\assets\vendor\fonts\boxicons\boxicons.svg" />
+	  <None Include="wwwroot\admin\assets\vendor\fonts\boxicons\boxicons.woff2" />
+	  <None Include="wwwroot\admin\assets\vendor\js\bootstrap.js" />
+	  <None Include="wwwroot\admin\assets\vendor\js\helpers.js" />
+	  <None Include="wwwroot\admin\assets\vendor\js\menu.js" />
+	  <None Include="wwwroot\admin\assets\vendor\libs\apex-charts\apexcharts.js" />
+	  <None Include="wwwroot\admin\assets\vendor\libs\highlight\highlight.js" />
+	  <None Include="wwwroot\admin\assets\vendor\libs\jquery\jquery.js" />
+	  <None Include="wwwroot\admin\assets\vendor\libs\masonry\masonry.js" />
+	  <None Include="wwwroot\admin\assets\vendor\libs\perfect-scrollbar\perfect-scrollbar.js" />
+	  <None Include="wwwroot\admin\assets\vendor\libs\popper\popper.js" />
+	  <None Include="wwwroot\admin\fonts\boxicons.scss" />
+	  <None Include="wwwroot\admin\js\bootstrap.js" />
+	  <None Include="wwwroot\admin\js\helpers.js" />
+	  <None Include="wwwroot\admin\js\menu.js" />
+	  <None Include="wwwroot\admin\libs\apex-charts\apex-charts.scss" />
+	  <None Include="wwwroot\admin\libs\apex-charts\apexcharts.js" />
+	  <None Include="wwwroot\admin\libs\highlight\highlight-github.scss" />
+	  <None Include="wwwroot\admin\libs\highlight\highlight.js" />
+	  <None Include="wwwroot\admin\libs\highlight\highlight.scss" />
+	  <None Include="wwwroot\admin\libs\jquery\jquery.js" />
+	  <None Include="wwwroot\admin\libs\masonry\masonry.js" />
+	  <None Include="wwwroot\admin\libs\perfect-scrollbar\perfect-scrollbar.js" />
+	  <None Include="wwwroot\admin\libs\perfect-scrollbar\perfect-scrollbar.scss" />
+	  <None Include="wwwroot\admin\libs\popper\popper.js" />
+	  <None Include="wwwroot\admin\scss\core.scss" />
+	  <None Include="wwwroot\admin\scss\pages\page-account-settings.scss" />
+	  <None Include="wwwroot\admin\scss\pages\page-auth.scss" />
+	  <None Include="wwwroot\admin\scss\pages\page-icons.scss" />
+	  <None Include="wwwroot\admin\scss\pages\page-misc.scss" />
+	  <None Include="wwwroot\admin\scss\theme-default.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_floating-labels.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_form-control.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_form-range.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_form-select.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_input-group.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_labels.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\forms\_validation.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_alert.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_badge.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_buttons.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_caret.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_dropdown.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_forms.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_list-group.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_misc.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_navs.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_pagination.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_progress.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_table-variants.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\mixins\_toasts.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_accordion.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_alert.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_badge.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_breadcrumb.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_button-group.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_buttons.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_card.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_carousel.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_close.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_dropdown.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_forms.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_functions.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_include.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_list-group.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_mixins.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_modal.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_nav.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_navbar.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_offcanvas.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_pagination.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_popover.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_progress.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_reboot.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_root.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_spinners.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_tables.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_toasts.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_tooltip.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_type.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_utilities-ltr.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_utilities.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap-extended\_variables.scss" />
+	  <None Include="wwwroot\admin\scss\_bootstrap.scss" />
+	  <None Include="wwwroot\admin\scss\_colors.scss" />
+	  <None Include="wwwroot\admin\scss\_components.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_app-brand.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_avatar.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_footer.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_menu.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_misc.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_navbar.scss" />
+	  <None Include="wwwroot\admin\scss\_components\mixins\_text-divider.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_app-brand.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_avatar.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_base.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_common.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_footer.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_include.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_layout.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_menu.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_mixins.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_text-divider.scss" />
+	  <None Include="wwwroot\admin\scss\_components\_variables.scss" />
+	  <None Include="wwwroot\admin\scss\_custom-variables\_bootstrap-extended.scss" />
+	  <None Include="wwwroot\admin\scss\_custom-variables\_components.scss" />
+	  <None Include="wwwroot\admin\scss\_custom-variables\_libs.scss" />
+	  <None Include="wwwroot\admin\scss\_custom-variables\_pages.scss" />
+	  <None Include="wwwroot\admin\scss\_custom-variables\_support.scss" />
+	  <None Include="wwwroot\admin\scss\_theme\_common.scss" />
+	  <None Include="wwwroot\admin\scss\_theme\_theme.scss" />
+	  <None Include="wwwroot\customizer\customizer.min.js" />
+	  <None Include="wwwroot\fonts\feather-webfont.svg" />
+	  <None Include="wwwroot\fonts\Pe-icon-7-strokebb1d.svg" />
+	  <None Include="wwwroot\fonts\socicon.svg" />
+	  <None Include="wwwroot\img\default-skin.svg" />
+	  <None Include="wwwroot\js\card.min.js" />
+	  <None Include="wwwroot\js\modernizr.min.js" />
+	  <None Include="wwwroot\js\scripts.min.js" />
+	  <None Include="wwwroot\js\vendor.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\LICENSE" />
+	  <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+	  <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+	  <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+	  <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+	  <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+	  <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+	  <None Include="wwwroot\util\accordions\accordions.js" />
+	  <None Include="wwwroot\util\calendar\cal-init.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\fullcalendar.min.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\gcal.min.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale-all.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\af.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar-dz.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar-kw.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar-ly.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar-ma.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar-sa.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar-tn.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ar.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\bg.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\bs.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ca.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\cs.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\da.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\de-at.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\de-ch.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\de.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\el.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\en-au.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\en-ca.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\en-gb.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\en-ie.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\en-nz.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\es-do.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\es-us.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\es.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\et.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\eu.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\fa.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\fi.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\fr-ca.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\fr-ch.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\fr.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\gl.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\he.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\hi.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\hr.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\hu.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\id.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\is.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\it.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ja.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ka.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\kk.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ko.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\lb.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\lt.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\lv.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\mk.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ms-my.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ms.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\nb.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\nl-be.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\nl.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\nn.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\pl.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\pt-br.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\pt.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ro.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\ru.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\sk.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\sl.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\sq.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\sr-cyrl.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\sr.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\sv.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\th.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\tr.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\uk.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\vi.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\zh-cn.js" />
+	  <None Include="wwwroot\util\calendar\fullcalendar\dist1\locale\zh-tw.js" />
+	  <None Include="wwwroot\util\calendar\moment\ender.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\af.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar-dz.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar-kw.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar-ly.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar-ma.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar-sa.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar-tn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ar.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\az.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\be.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\bg.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\bm.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\bn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\bo.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\br.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\bs.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ca.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\cs.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\cv.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\cy.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\da.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\de-at.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\de-ch.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\de.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\dv.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\el.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\en-au.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\en-ca.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\en-gb.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\en-ie.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\en-il.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\en-nz.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\eo.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\es-do.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\es-us.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\es.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\et.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\eu.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fa.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fi.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fo.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fr-ca.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fr-ch.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fr.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\fy.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\gd.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\gl.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\gom-latn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\gu.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\he.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\hi.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\hr.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\hu.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\hy-am.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\id.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\is.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\it.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ja.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\jv.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ka.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\kk.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\km.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\kn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ko.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ky.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\lb.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\lo.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\lt.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\lv.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\me.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\mi.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\mk.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ml.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\mn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\mr.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ms-my.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ms.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\mt.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\my.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\nb.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ne.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\nl-be.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\nl.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\nn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\pa-in.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\pl.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\pt-br.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\pt.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ro.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ru.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sd.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\se.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\si.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sk.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sl.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sq.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sr-cyrl.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sr.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ss.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sv.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\sw.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ta.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\te.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tet.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tg.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\th.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tl-ph.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tlh.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tr.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tzl.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tzm-latn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\tzm.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ug-cn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\uk.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\ur.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\uz-latn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\uz.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\vi.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\x-pseudo.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\yo.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\zh-cn.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\zh-hk.js" />
+	  <None Include="wwwroot\util\calendar\moment\locale\zh-tw.js" />
+	  <None Include="wwwroot\util\calendar\moment\min\locales.min.js" />
+	  <None Include="wwwroot\util\calendar\moment\min\moment-with-locales.min.js" />
+	  <None Include="wwwroot\util\calendar\moment\min\moment.min.js" />
+	  <None Include="wwwroot\util\calendar\moment\moment.js" />
+	  <None Include="wwwroot\util\calendar\moment\package.js" />
+	  <None Include="wwwroot\util\loader\loader.js" />
+	  <None Include="wwwroot\util\persian-datepicker\persian-date.min.js" />
+	  <None Include="wwwroot\util\persian-datepicker\persian-datepicker.min.js" />
+	  <None Include="wwwroot\util\sweetalert2.js" />
+	  <None Include="wwwroot\util\toast\js\jquery.toast.js" />
+	  <None Include="wwwroot\util\toast\js\toast.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Areas\admin\Views\EquipmentReservation\Edit.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Areas\admin\Views\EquipmentReservation\Edit.cshtml" />
+	</ItemGroup>
+
+</Project>

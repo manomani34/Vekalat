@@ -1,0 +1,23 @@
+﻿@model List<Vekalat.Core.Entities.Slid>
+
+<section class="container padding-top-1x" id="collections">
+    <h3 class="text-center mb-30">Studios (Locations)</h3>
+    <div class="row pt-1 justify-content-center">
+        <div class="col-xl-12">
+            <div class="gallery-wrapper owl-carousel" data-owl-carousel="{ &quot;loop&quot;: true, &quot;autoplayTimeout&quot;: 4000, &quot;autoplay&quot;: true, &quot;nav&quot;: true, &quot;dots&quot;: true }">
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="gallery-item no-hover-effect">
+                            <img style="width:100%" src="SlidPic/@item.PictureURL" alt="Cover">
+                            <span class="caption">@item.Title</span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+

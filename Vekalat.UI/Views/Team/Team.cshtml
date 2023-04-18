@@ -1,0 +1,70 @@
+﻿@using AryanShop.Application.Common.Helpers;
+@using Vekalat.Application.Common;
+@using Vekalat.Application.Common.Helpers;
+@using Vekalat.UI.ViewModels.TeamViewModels;
+@model TeamViewModel
+@{
+    ViewData["Title"] = "Team";
+}
+
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>Team</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>Team</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-1">
+    <div class="row">
+        <!-- Team Posts-->
+        <div class="col-xl-9 col-lg-8 order-lg-2">
+            <!-- Post-->
+            <div class="row">
+
+                @if (Model.PagingHandler.Items.Any())
+                {
+                    @foreach (var item in Model.PagingHandler.Items)
+                    {
+
+                        <div class="col-md-3 col-sm-6 mb-30 text-center">
+                            <a href="/TeamDetails/@item.Id/@item.SurName.ToFixedPath()">
+                                <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-2" src="Images/Team-images/@item.Imagename" alt="Team">
+                            </a>
+                            <h6>@item.FirstName @item.SurName</h6>
+                            <p class="text-muted mb-2">@item.Job</p>
+                            <p class="text-muted mb-2">@item.Email</p>
+                            <p class="text-muted mb-2">@item.Tel</p>
+                            @*   <div class="social-bar">
+                    <a class="social-button shape-circle sb-facebook" href="#" data-toggle="tooltip" data-placement="top" title="Facebook">
+                    <i class="socicon-facebook"></i>
+                    </a>
+                    <a class="social-button shape-circle sb-twitter" href="#" data-toggle="tooltip" data-placement="top" title="Twitter">
+                    <i class="socicon-twitter"></i>
+                    </a>
+                    <a class="social-button shape-circle sb-google-plus" href="#" data-toggle="tooltip" data-placement="top" title="Google +">
+
+                    </a>
+                    </div>*@
+                        </div>
+
+                    }
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

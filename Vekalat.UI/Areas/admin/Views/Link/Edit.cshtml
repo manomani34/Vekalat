@@ -1,0 +1,60 @@
+﻿@using Vekalat.Application.Common.Helpers
+@model Vekalat.Core.Entities.Link;
+@{
+    ViewData["Title"] = "Edit Link";
+}
+
+@section Plugins
+    {
+
+    <link href="/admin/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+}
+
+<div class="col-md-12">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <h5 class="card-header">@ViewData["Title"]</h5>
+                <div class="card-body">
+
+
+                    <form role="form" method="post" asp-action="Edit">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-md-8 col-12">
+                                    <label class="">Title</label>
+                                    <input class="form-control" asp-for="Title" type="text">
+                                    <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class="form-group col-md-4 col-4" style="padding: 43px 14px 13px 15px;">
+                                    <input type="checkbox" asp-for="IsActive" class="form-check-input  mychk " id="status">
+                                    <label class="form-group-label mr-4 font-I text-success" for="status">Active</label>
+                                </div>
+
+                                <div class="form-group col-md-8 col-12">
+                                    <label class="">Url</label>
+                                    <input class="form-control" asp-for="Url" type="text">
+                                    <span asp-validation-for="Url" class="text text-danger mb-2"></span>
+                                </div>
+
+                                <div class="form-group col-md-8 col-12">
+                                    <label class="">Order</label>
+                                    <input class="form-control" asp-for="Order" type="number" min="0">
+                                    <span asp-validation-for="Order" class="text text-danger mb-2"></span>
+                                </div>
+                               
+                            </div>
+                           
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-warning">Save</button>
+                        <a href="@Url.Action("Index")" class="btn btn-danger">Cancle</a>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
