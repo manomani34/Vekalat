@@ -371,7 +371,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     color: #606975;
-    font-family: "Maven Pro",Helvetica,Arial,sans-serif;
+    font-family: IRANSans;
     font-size: 14px;
     font-weight: normal;
     text-transform: none;
@@ -2178,7 +2178,7 @@ select.form-control.form-control-sm:not([size]):not([multiple]) {
     background-color: transparent;
     background-image: none;
     color: #606975;
-    font-family: "Maven Pro",Helvetica,Arial,sans-serif;
+    font-family: IRANSans;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;

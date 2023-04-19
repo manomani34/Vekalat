@@ -25,6 +25,7 @@
     <link id="mainStyles" rel="stylesheet" media="screen" href="~/css/styles.min.css">
     <!-- Customizer Styles-->
     <link rel="stylesheet" media="screen" href="~/customizer/customizer.min.css">
+    <link rel="stylesheet" media="screen" href="~/css/font.css">
     <!-- Google Tag Manager-->
     <script>
         (function (w, d, s, l, i) {
@@ -186,170 +187,45 @@
             <div class="inner">
                 <!-- Off-Canvas Toggle (#shop-categories)--><a class="offcanvas-toggle cats-toggle" href="#shop-categories" data-toggle="offcanvas"></a>
                 <!-- Off-Canvas Toggle (#mobile-menu)--><a class="offcanvas-toggle menu-toggle" href="#mobile-menu" data-toggle="offcanvas"></a>
-                <!-- Site Logo--><a class="site-logo" href="@Url.Action("Index", "Home")"><img src="~/img/logo/logo.png" alt="Digioneplus"></a>
+                <!-- Site Logo--><a class="site-logo" href="@Url.Action("Index", "Home")">
+                    </a>
             </div>
         </div>
         <!-- Main Navigation-->
-        <nav class="site-menu">
-            <ul>
+        <nav class="site-menu" dir="rtl">
+        <ul>
+            <li class="active">
+                <a href="@Url.Action("Index", "Home")"><span>خانه</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Studio")"><span>وکلا</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Equipment")"><span>پرسش و پاسخ</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Services")"><span>نقشه</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Blog", "Blog")"><span>خبرها</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Contact", "Home")"><span>سوالات متداول</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("About", "Home")"><span>همکاری</span></a>
+            </li>
+            <li>
+                <a href="@Url.Action("Location", "Studio")"><span>پشتیبانی</span></a>
+            </li>
+            @if (!User.Identity.IsAuthenticated)
+            {
                 <li>
-                    <a href="@Url.Action("Index", "Home")"><span>Home</span></a>
+                    <a class="btn btn-sm btn-danger" href="@Url.Action("Login", "Account")"><span>ورود</span></a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Studio" ? "active" : "")">
-                    <a href="@Url.Action("Studio", "Studio")"><span>Studios</span></a>
-                </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Equipment" ? "active" : "")">
-                    <a href="@Url.Action("Equipment", "Equipment")"><span>Equipment</span></a>
-                </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Services" ? "active" : "")">
-                    <a href="@Url.Action("Services", "Services")"><span>Services</span></a>
-                </li>
-                @* <li class="has-megamenu">
-                <a href="index.html"><span>Department</span></a>
-                <ul class="mega-menu">
-                <li>
-                <a class="d-block img-thumbnail text-center navi-link" href="index.html">
-                <img alt="Featured Products Slider" src="img/mega-menu-home/01.jpg">
-                <h6 class="mt-3">Featured Products Slider</h6>
-                </a>
-                </li>
-                <li>
-                <a class="d-block img-thumbnail text-center navi-link" href="home-featured-categories.html">
-                <img alt="Featured Categories" src="img/mega-menu-home/02.jpg">
-                <h6 class="mt-3">Featured Categories</h6>
-                </a>
-                </li>
-                <li>
-                <a class="d-block img-thumbnail text-center navi-link" href="home-collection-showcase.html">
-                <img alt="Products Collection Showcase" src="img/mega-menu-home/03.jpg">
-                <h6 class="mt-3">Products Collection Showcase</h6>
-                </a>
-                </li>
-                <li>
-                <div class="img-thumbnail text-center">
-                <img alt="More To Come. Stay Tuned!" src="img/mega-menu-home/04.jpg">
-                <h6 class="mt-3">More To Come. Stay Tuned!</h6>
-                </div>
-                </li>
-                </ul>
-                </li>*@
-                @*<li>
-                <a href="shop-grid-ls.html"><span>Shop</span></a>
-                <ul class="sub-menu">
-                <li><a href="shop-categories.html">Shop Categories</a></li>
-                <li class="has-children">
-                <a href="shop-grid-ls.html"><span>Shop Grid</span></a>
-                <ul class="sub-menu">
-                <li><a href="shop-grid-ls.html">Grid Left Sidebar</a></li>
-                <li><a href="shop-grid-rs.html">Grid Right Sidebar</a></li>
-                <li><a href="shop-grid-ns.html">Grid No Sidebar</a></li>
-                </ul>
-                </li>
-                <li class="has-children">
-                <a href="shop-list-ls.html"><span>Shop List</span></a>
-                <ul class="sub-menu">
-                <li><a href="shop-list-ls.html">List Left Sidebar</a></li>
-                <li><a href="shop-list-rs.html">List Right Sidebar</a></li>
-                <li><a href="shop-list-ns.html">List No Sidebar</a></li>
-                </ul>
-                </li>
-                <li><a href="shop-single.html">Single Product</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li class="has-children">
-                <a href="checkout-address.html"><span>Checkout</span></a>
-                <ul class="sub-menu">
-                <li><a href="checkout-address.html">Address</a></li>
-                <li><a href="checkout-shipping.html">Shipping</a></li>
-                <li><a href="checkout-payment.html">Payment</a></li>
-                <li><a href="checkout-review.html">Review</a></li>
-                <li><a href="checkout-complete.html">Complete</a></li>
-                </ul>
-                </li>
-                </ul>
-                </li>*@
-                @*<li class="has-megamenu">
-                <a href="#"><span>Categories</span></a>
-                <ul class="mega-menu">
-                <li>
-                <span class="mega-menu-title">Top Categories</span>
-                <ul class="sub-menu">
-                <li><a href="#">LIGHTS</a></li>
-                <li><a href="#">CAMERA</a></li>
-                <li><a href="#">LENS</a></li>
-                <li><a href="#">STABLIZER</a></li>
-                <li><a href="#">AUDIO</a></li>
-                <li><a href="#">DIGITAL</a></li>
-                <li><a href="#">STANDS</a></li>
-                <li><a href="#">ACCESSORIES</a></li>
-                </ul>
-                </li>
-                <li>
-                <span class="mega-menu-title">Services</span>
-                <ul class="sub-menu">
-                <li><a href="#">STUDIO</a></li>
-                <li><a href="#">EQUIPMENTS</a></li>
-                <li><a href="#">ASSISTANT</a></li>
-                <li><a href="#">DEKORATION</a></li>
-                <li><a href="#">TRANSFOR</a></li>
-                <li><a href="#">CATERING</a></li>
-                <li><a href="#">SPECIAL SERVISES</a></li>
-                </ul>
-                </li>
-                <li>
-                <section class="promo-box" style="background-image: url(img/banners/03.jpg);">
-                <!-- Choose between .overlay-dark (#000) or .overlay-light (#fff) with default opacity of 50%. You can overrride default color and opacity values via 'style' attribute.--><span class="overlay-dark" style="opacity: .45;"></span>
-                <div class="promo-box-content text-center padding-top-2x padding-bottom-2x">
-                <h3 class="text-bold text-light text-shadow">STUDIO</h3>
-                <h4 class="text-light text-thin text-shadow">save up to 50%!</h4>
-                <a class="btn btn-sm btn-primary" href="@Url.Action("Index", "Studio")">Show More</a>
-                </div>
-                </section>
-                </li>
-                <li>
-                <section class="promo-box" style="background-image: url(img/banners/04.jpg);">
-                <!-- Choose between .overlay-dark (#000) or .overlay-light (#fff) with default opacity of 50%. You can overrride default color and opacity values via 'style' attribute.--><span class="overlay-dark" style="opacity: .45;"></span>
-                <div class="promo-box-content text-center padding-top-2x padding-bottom-2x">
-                <h3 class="text-bold text-light text-shadow">EQUIPMENTS</h3>
-                <h4 class="text-light text-thin text-shadow">save up to 50%!</h4>
-                <a class="btn btn-sm btn-primary" href="@Url.Action("Index", "Equipment")">Show More</a>
-                </div>
-                </section>
-                </li>
-                </ul>
-                </li>*@
-                @*<li>
-                <a href="account-orders.html"><span>Account</span></a>
-                <ul class="sub-menu">
-                <li class="active"><a href="account-login.html">Login / Register</a></li>
-                <li><a href="account-password-recovery.html">Password Recovery</a></li>
-                <li><a href="account-orders.html">Orders List</a></li>
-                <li><a href="account-wishlist.html">Wishlist</a></li>
-                <li><a href="account-profile.html">Profile Page</a></li>
-                <li><a href="account-address.html">Contact / Shipping Address</a></li>
-                <li><a href="account-tickets.html">My Tickets</a></li>
-                <li><a href="account-single-ticket.html">Single Ticket</a></li>
-                </ul>
-                </li>*@
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Blog" ? "active" : "")">
-                    <a href="@Url.Action("Blog", "Blog")"><span>Blog</span></a>
-                </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")">
-                    <a href="@Url.Action("Contact", "Home")"><span>Contact Us</span></a>
-                </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">
-                    <a href="@Url.Action("About", "Home")"><span>About Us</span></a>
-                </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Location" ? "active" : "")">
-                    <a href="@Url.Action("Location", "Studio")"><span>Location</span></a>
-                </li>
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "active" : "")">
-                        <a href="@Url.Action("Login", "Account")"><span>Login</span></a>
-                    </li>
-                }
-            </ul>
-        </nav>
+            }
+        </ul>
+    </nav>
         <!-- Toolbar-->
         <div class="toolbar">
             <div class="inner">

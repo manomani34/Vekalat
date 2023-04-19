@@ -131,8 +131,7 @@
             <!-- Off-Canvas Toggle (#mobile-menu)--><a class="offcanvas-toggle menu-toggle" href="#mobile-menu" data-toggle="offcanvas"></a>
             <!-- Site Logo-->
             <a class="site-logo" id="hover_img_a" href="@Url.Action("Index", "Home")">
-                <img src="img/logo/DIGI.png" id="hover_img" alt="Digioneplus">
-                <img src="img/logo/DIGI-2.png" id="hover-img-2">
+                <img src="img/logo/DIGI.png" alt="Digioneplus">
             </a>
         </div>
     </div>
@@ -166,7 +165,7 @@
             @if (!User.Identity.IsAuthenticated)
             {
                 <li>
-                    <a href="@Url.Action("Login", "Account")"><span>Login</span></a>
+                    <a href="@Url.Action("Login", "Account")"><span>ورود</span></a>
                 </li>
             }
         </ul>
